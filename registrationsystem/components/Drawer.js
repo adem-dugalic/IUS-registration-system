@@ -20,8 +20,10 @@ import {
   createStyles,
 } from "@material-ui/core/styles";
 
-//import "../css/style.css";
-//import Cookie from "js-cookie";
+// import "../css/style.css";
+// import Logo from "../img/IUSlogo2.png";
+// import { Redirect, Link } from "react-router-dom";
+// import Cookie from "js-cookie";
 
 const drawerWidth = 200;
 
@@ -29,14 +31,15 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       position: "relative",
-      //display: "flex",
-      minHeight: "100%",
+      display: "flex",
     },
     drawer: {
+      position: "relative",
       [theme.breakpoints.up("sm")]: {
         width: drawerWidth,
         flexShrink: 0,
       },
+      //display: "flex",
     },
     appBar: {
       [theme.breakpoints.up("sm")]: {
@@ -64,8 +67,9 @@ const useStyles = makeStyles((theme) =>
     // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
+      position: "absolute",
+      //display: "flex",
       minHeight: "100%",
-      position: "relative",
       width: drawerWidth,
       borderRight: "none",
       backgroundColor: "#292626",
@@ -126,14 +130,14 @@ export default function ResponsiveDrawer(props) {
     <div className={classes.maximised}>
       <div className={classes.blueGrad}>
         <div className={classes.logo}>
-          <img className={classes.ius} src={"/IUSlogo2.png"} />
+          <img className={classes.ius} src="/IUSlogo2.png" />
           <span
-            className={classes.user}
+            className="user"
             // dangerouslySetInnerHTML={{
             //   __html: Cookie.get("name") + " " + Cookie.get("surname"),
             // }}
           >
-            User
+            USername
           </span>
         </div>
         <div className={classes.toolbar} />
@@ -149,7 +153,7 @@ export default function ResponsiveDrawer(props) {
               </ListItemIcon>
               <Link
                 className="link"
-                href="/home"
+                href="/Home"
                 onClick={() => props.mobileOpenFunction(false)}
               >
                 <ListItemText primary="Home" />
@@ -161,8 +165,8 @@ export default function ResponsiveDrawer(props) {
                 <AddCircle className={classes.iconColor} />
               </ListItemIcon>
               <Link
-                className={classes.link}
-                href="/allCourses"
+                className="link"
+                href="/AllCourses"
                 onClick={() => props.mobileOpenFunction(false)}
               >
                 <ListItemText primary="Add Courses" />
@@ -175,7 +179,7 @@ export default function ResponsiveDrawer(props) {
               </ListItemIcon>
               <Link
                 className="link"
-                href="/myCourses"
+                href="/MyCourses"
                 onClick={() => props.mobileOpenFunction(false)}
               >
                 <ListItemText primary="My Courses" />
@@ -213,7 +217,7 @@ export default function ResponsiveDrawer(props) {
         <Hidden smUp implementation="css">
           <Drawer
             variant="temporary"
-            anchor={"left"}
+            anchor={theme.direction === "rtl" ? "right" : "left"}
             open={mobile}
             onClose={handleDrawerToggle}
             classes={{

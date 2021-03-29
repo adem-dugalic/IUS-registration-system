@@ -23,6 +23,7 @@ const useStyles = makeStyles(() =>
     },
     pannelDiv: {
       position: "relative",
+      display: "flex",
       top: "10%",
       left: "10%",
       width: "85%",

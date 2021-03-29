@@ -4,8 +4,7 @@ import Cookie from "js-cookie";
 import { QueryStatus, useQuery } from "react-query";
 import { FetchAllCourses } from "./FetchAllCourses";
 
-
-const AllCoursesTable  = () => {
+const AllCoursesTable = () => {
   const { data, status } = FetchAllCourses();
   if (status === "error") {
     return <div>Error</div>;
