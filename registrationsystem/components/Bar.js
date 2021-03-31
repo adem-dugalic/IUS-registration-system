@@ -83,7 +83,6 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-
 export default function Bar(props) {
   const classes = useStyles();
   const mobile = props.mobileOpen;

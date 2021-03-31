@@ -160,29 +160,41 @@ export default function ResponsiveDrawer(props) {
               </Link>
             </ListItem>
             {/*Add Courses*/}
-            <ListItem button key="Add Courses">
+            <ListItem button key="Registration">
               <ListItemIcon>
                 <AddCircle className={classes.iconColor} />
               </ListItemIcon>
               <Link
                 className="link"
-                href="/AllCourses"
+                href="/registration"
                 onClick={() => props.mobileOpenFunction(false)}
               >
-                <ListItemText primary="Add Courses" />
+                <ListItemText primary="Registration" />
               </Link>
             </ListItem>
             {/*My Courses*/}
-            <ListItem button key="My Courses">
+            <ListItem button key="Transcript">
               <ListItemIcon>
                 <InboxIcon className={classes.iconColor} />
               </ListItemIcon>
               <Link
                 className="link"
-                href="/MyCourses"
+                href="/transcript"
                 onClick={() => props.mobileOpenFunction(false)}
               >
-                <ListItemText primary="My Courses" />
+                <ListItemText primary="Transcript" />
+              </Link>
+            </ListItem>
+            <ListItem button key="Contract and payment">
+              <ListItemIcon>
+                <InboxIcon className={classes.iconColor} />
+              </ListItemIcon>
+              <Link
+                className="link"
+                href="/payment"
+                onClick={() => props.mobileOpenFunction(false)}
+              >
+                <ListItemText primary="Contract and payment" />
               </Link>
             </ListItem>
             {/*Schedule*/}
