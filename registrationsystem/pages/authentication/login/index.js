@@ -12,6 +12,7 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import { useRouter } from "next/router";
 
 function Copyright() {
   return (
@@ -67,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignInSide() {
   const classes = useStyles();
+  const router = useRouter();
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -117,11 +119,12 @@ export default function SignInSide() {
               label="Remember me"
             />
             <Button
-              type="submit"
+              //type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={() => router.push("/home")}
             >
               Login
             </Button>

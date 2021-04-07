@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-
+import Layout from "../../Components/Layout";
 const index = () => {
-  return <div>Enter</div>;
+  return <Layout></Layout>;
 };
 
 export default index;

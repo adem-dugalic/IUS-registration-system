@@ -114,6 +114,9 @@ const useStyles = makeStyles((theme) =>
       //font-family: "Montserrat", sans-serif,
       textTransform: "uppercase",
     },
+    size: {
+      fontSize: "0.5em",
+    },
   })
 );
 
@@ -147,13 +150,13 @@ export default function ResponsiveDrawer(props) {
           <Divider />
           <List>
             {/*Home*/}
-            <ListItem button key="Home">
+            <ListItem button key="Home" className={classes.size}>
               <ListItemIcon>
                 <Home className={classes.iconColor} />
               </ListItemIcon>
               <Link
-                className="link"
-                href="/Home"
+                className={classes.link}
+                href="/home"
                 onClick={() => props.mobileOpenFunction(false)}
               >
                 <ListItemText primary="Home" />
@@ -165,7 +168,7 @@ export default function ResponsiveDrawer(props) {
                 <AddCircle className={classes.iconColor} />
               </ListItemIcon>
               <Link
-                className="link"
+                className={classes.link}
                 href="/registration"
                 onClick={() => props.mobileOpenFunction(false)}
               >
@@ -178,7 +181,7 @@ export default function ResponsiveDrawer(props) {
                 <InboxIcon className={classes.iconColor} />
               </ListItemIcon>
               <Link
-                className="link"
+                className={classes.link}
                 href="/transcript"
                 onClick={() => props.mobileOpenFunction(false)}
               >
@@ -190,7 +193,7 @@ export default function ResponsiveDrawer(props) {
                 <InboxIcon className={classes.iconColor} />
               </ListItemIcon>
               <Link
-                className="link"
+                className={classes.link}
                 href="/payment"
                 onClick={() => props.mobileOpenFunction(false)}
               >
