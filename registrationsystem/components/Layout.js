@@ -28,6 +28,14 @@ const useStyles = makeStyles(() =>
       display: "flex",
       backgroundColor: "rgb(95, 91, 91, 0.8)",
     },
+    main: {
+      position: "relaive",
+      width: "100%",
+    },
+    barDiv: {
+      position: "relaive",
+      width: "100%",
+    },
   })
 );
 
@@ -42,12 +50,7 @@ function getWindowDimensions() {
 
 const Layout = (props) => {
   const classes = useStyles();
-  const [isMobile, setisMobile] = useState(false);
-  if (typeof window !== "undefined") {
-    window.addEventListener("resize", () => {
-      setisMobile(getWindowDimensions);
-    });
-  }
+  const [isMobile, setisMobile] = useState(props.mobile);
   return (
     <div className={classes.root}>
       <div className={classes.pannelDiv}>
@@ -56,7 +59,7 @@ const Layout = (props) => {
           mobileOpen={props.mobileOpen}
         />
         <main className={classes.main}>
-          <div className={classes.homeDiv}>
+          <div className={classes.bardDiv}>
             {isMobile ? (
               <Bar
                 setMobileOpen={props.setMobileOpen}

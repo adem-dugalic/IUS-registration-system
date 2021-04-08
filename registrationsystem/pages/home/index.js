@@ -4,7 +4,7 @@ import Welcome from "../../Components/Welcome";
 
 const Home = (props) => {
   return (
-    <Layout>
+    <Layout mobile={false}>
       <Welcome />
     </Layout>
   );

@@ -6,7 +6,7 @@ import theme from "../styles/theme";
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang="en" style={{ height: "100%", margin: 0 }}>
+      <Html lang="en" style={{ height: "100%", margin: 0, overflow: "hidden" }}>
         <Head>
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />

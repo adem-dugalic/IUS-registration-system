@@ -203,9 +203,15 @@ export default function ResponsiveDrawer(props) {
             {/*Schedule*/}
             <ListItem button key="Schedule">
               <ListItemIcon>
-                <Schedule className={classes.iconColor} />
+                <InboxIcon className={classes.iconColor} />
               </ListItemIcon>
-              <ListItemText primary="Schedule" />
+              <Link
+                className={classes.link}
+                href="/schedule"
+                onClick={() => props.mobileOpenFunction(false)}
+              >
+                <ListItemText primary="Schedule" />
+              </Link>
             </ListItem>
           </List>
         </div>
