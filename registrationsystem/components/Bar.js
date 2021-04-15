@@ -104,7 +104,7 @@ export default function Bar(props) {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap>
-          IUS pre-registration system
+          IUS system
         </Typography>
         <div className={classes.search}>
           <div className={classes.searchIcon}>

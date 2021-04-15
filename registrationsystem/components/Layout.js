@@ -60,14 +60,14 @@ const Layout = (props) => {
         />
         <main className={classes.main}>
           <div className={classes.bardDiv}>
-            {isMobile ? (
+            {/* {isMobile ? (
               <Bar
                 setMobileOpen={props.setMobileOpen}
                 mobileOpen={props.mobileOpen}
               />
             ) : (
               ""
-            )}
+            )} */}
           </div>
           {props.children}
         </main>

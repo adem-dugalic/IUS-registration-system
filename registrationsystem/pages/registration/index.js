@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Layout from "../../Components/Layout";
 import CourseTable from "../../Components/CourseTable";
+import RegistrationMenu from "../../Components/RegistrationMenu";
 import { createStyles, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(() =>
@@ -18,6 +19,7 @@ const index = () => {
   const classes = useStyles();
   return (
     <Layout mobile={true}>
+      <RegistrationMenu />
       <div className={classes.root}>
         <CourseTable />
       </div>
