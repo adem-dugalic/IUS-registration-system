@@ -21,20 +21,28 @@ const useStyles = makeStyles(() =>
     pannelDiv: {
       position: "relative",
       display: "flex",
-      top: "10%",
-      left: "10%",
-      width: "85%",
-      height: "85%",
+      // top: "10%",
+      // left: "10%",
+      width: "100%",
+      height: "100%",
       display: "flex",
       backgroundColor: "rgb(95, 91, 91, 0.8)",
+      // paddingLeft: 10,
     },
     main: {
       position: "relaive",
       width: "100%",
+      // overflowY: "auto",
     },
     barDiv: {
+      position: "sticky",
+      width: "100%",
+    },
+    workArea: {
       position: "relaive",
       width: "100%",
+      height: "100%",
+      // overflowY: "clip",
     },
   })
 );
@@ -69,7 +77,7 @@ const Layout = (props) => {
               ""
             )} */}
           </div>
-          {props.children}
+          <div className={classes.workArea}>{props.children}</div>
         </main>
       </div>
     </div>
