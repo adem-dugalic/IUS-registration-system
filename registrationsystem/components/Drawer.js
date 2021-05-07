@@ -12,6 +12,9 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import AddCircle from "@material-ui/icons/AddCircle";
 import Home from "@material-ui/icons/Home";
+import Grade from "@material-ui/icons/Grade";
+import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
+import ScheduleIcon from "@material-ui/icons/Schedule";
 import Link from "next/link";
 import {
   makeStyles,
@@ -162,6 +165,18 @@ export default function ResponsiveDrawer(props) {
                 <ListItemText primary="Home" />
               </Link>
             </ListItem>
+            <ListItem button key="Grades" className={classes.size}>
+              <ListItemIcon>
+                <Grade className={classes.iconColor} />
+              </ListItemIcon>
+              <Link
+                className={classes.link}
+                href="/grades"
+                onClick={() => props.mobileOpenFunction(false)}
+              >
+                <ListItemText primary="Grades" />
+              </Link>
+            </ListItem>
             {/*Add Courses*/}
             <ListItem button key="Registration">
               <ListItemIcon>
@@ -190,7 +205,7 @@ export default function ResponsiveDrawer(props) {
             </ListItem>
             <ListItem button key="Contract and payment">
               <ListItemIcon>
-                <InboxIcon className={classes.iconColor} />
+                <AccountBalanceIcon className={classes.iconColor} />
               </ListItemIcon>
               <Link
                 className={classes.link}
@@ -203,7 +218,7 @@ export default function ResponsiveDrawer(props) {
             {/*Schedule*/}
             <ListItem button key="Schedule">
               <ListItemIcon>
-                <InboxIcon className={classes.iconColor} />
+                <ScheduleIcon className={classes.iconColor} />
               </ListItemIcon>
               <Link
                 className={classes.link}

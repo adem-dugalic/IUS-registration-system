@@ -47,15 +47,9 @@ function RegistrationMenu() {
           <Typography variant="h6" className={classes.title}>
             Registration
           </Typography>
-<<<<<<< HEAD
           <CLink path="/registration">Choosen courses</CLink>
           <CLink path="/registration/addCourses">Add Courses</CLink>
           <CLink path="/schedule">Schedule</CLink>
-=======
-          <CLink path="/registration/choosenCourses">Choosen courses</CLink>
-          <CLink path="/registration/addCourses">Add Courses</CLink>
-          <CLink path="/registration/schedule">Schedule</CLink>
->>>>>>> b0099e71e09c1331be73f9ff824156b118397c5f
         </Toolbar>
       </AppBar>
     </div>
