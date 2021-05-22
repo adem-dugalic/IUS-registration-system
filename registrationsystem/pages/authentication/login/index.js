@@ -124,7 +124,7 @@ export default function SignInSide() {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={() => router.push("/home")}
+              onClick={() => router.push("/student/home")}
             >
               Login
             </Button>

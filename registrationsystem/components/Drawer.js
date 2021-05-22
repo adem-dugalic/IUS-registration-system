@@ -12,6 +12,9 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import AddCircle from "@material-ui/icons/AddCircle";
 import Home from "@material-ui/icons/Home";
+import Grade from "@material-ui/icons/Grade";
+import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
+import ScheduleIcon from "@material-ui/icons/Schedule";
 import Link from "next/link";
 import {
   makeStyles,
@@ -156,10 +159,22 @@ export default function ResponsiveDrawer(props) {
               </ListItemIcon>
               <Link
                 className={classes.link}
-                href="/home"
+                href="/student/home"
                 onClick={() => props.mobileOpenFunction(false)}
               >
                 <ListItemText primary="Home" />
+              </Link>
+            </ListItem>
+            <ListItem button key="Grades" className={classes.size}>
+              <ListItemIcon>
+                <Grade className={classes.iconColor} />
+              </ListItemIcon>
+              <Link
+                className={classes.link}
+                href="/student/grades"
+                onClick={() => props.mobileOpenFunction(false)}
+              >
+                <ListItemText primary="Grades" />
               </Link>
             </ListItem>
             {/*Add Courses*/}
@@ -169,7 +184,7 @@ export default function ResponsiveDrawer(props) {
               </ListItemIcon>
               <Link
                 className={classes.link}
-                href="/registration"
+                href="/student/registration"
                 onClick={() => props.mobileOpenFunction(false)}
               >
                 <ListItemText primary="Registration" />
@@ -182,7 +197,7 @@ export default function ResponsiveDrawer(props) {
               </ListItemIcon>
               <Link
                 className={classes.link}
-                href="/transcript"
+                href="/student/transcript"
                 onClick={() => props.mobileOpenFunction(false)}
               >
                 <ListItemText primary="Transcript" />
@@ -190,11 +205,11 @@ export default function ResponsiveDrawer(props) {
             </ListItem>
             <ListItem button key="Contract and payment">
               <ListItemIcon>
-                <InboxIcon className={classes.iconColor} />
+                <AccountBalanceIcon className={classes.iconColor} />
               </ListItemIcon>
               <Link
                 className={classes.link}
-                href="/payment"
+                href="/student/contract"
                 onClick={() => props.mobileOpenFunction(false)}
               >
                 <ListItemText primary="Contract and payment" />
@@ -203,11 +218,11 @@ export default function ResponsiveDrawer(props) {
             {/*Schedule*/}
             <ListItem button key="Schedule">
               <ListItemIcon>
-                <InboxIcon className={classes.iconColor} />
+                <ScheduleIcon className={classes.iconColor} />
               </ListItemIcon>
               <Link
                 className={classes.link}
-                href="/schedule"
+                href="/student/schedule"
                 onClick={() => props.mobileOpenFunction(false)}
               >
                 <ListItemText primary="Schedule" />

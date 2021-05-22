@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import Layout from "../../Components/Layout";
-import CourseTable from "../../Components/CourseTable";
+import React from "react";
+import Schedule from "../../../Components/Schedule";
+import Layout from "../../../Components/Layout";
+
 import { createStyles, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(() =>
   createStyles({
     root: {
       position: "relative",
-      top: "10%",
+      top: "5%",
       marginLeft: "3%",
       marginRight: "3%",
     },
@@ -19,7 +20,7 @@ const index = () => {
   return (
     <Layout mobile={true}>
       <div className={classes.root}>
-        <CourseTable />
+        <Schedule />
       </div>
     </Layout>
   );
