@@ -12,11 +12,12 @@ import { Grid, Typography } from "@material-ui/core";
 const useStyles = makeStyles({
   root: {
     marginTop: "2%",
-    // padingLeft: "3%",
-    // padingRight: "3%",
+    width: "100%",
+    border: "1px solid black",
   },
   table: {
     minWidth: 600,
+    width: "100%",
     // marginTop: "5%",
   },
   tableSmall: {
@@ -26,6 +27,7 @@ const useStyles = makeStyles({
   semester: {
     color: "rgba(6, 125, 233, 0.9110994739692753)",
     fontWeight: 900,
+    textAlign: "center",
   },
 });
 
@@ -69,12 +71,11 @@ const CustomTableCellBodyHeader = withStyles((theme) => ({
 
 export default function DenseTable(props) {
   const classes = useStyles();
-
   return (
-    <Grid container className={classes.root} spacing={2}>
+    <Grid container className={classes.root}>
       <Grid item xs={12}>
         <Typography className={classes.semester}>
-          Seemester {props.semester}
+          Semester {props.semester}
         </Typography>
       </Grid>
       <Grid item xs={12}>
@@ -107,36 +108,6 @@ export default function DenseTable(props) {
                   <CustomTableCell align="right">{row.fat}</CustomTableCell>
                   <CustomTableCell align="right">{row.carbs}</CustomTableCell>
                   <CustomTableCell align="right">{row.protein}</CustomTableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Grid>
-      <Grid item xs={4}>
-        <TableContainer>
-          <Table
-            className={classes.tableSmall}
-            size="small"
-            aria-label="a dense table"
-          >
-            <TableHead>
-              <TableRow>
-                <CustomTableCell></CustomTableCell>
-                <CustomTableCellSmall>Semester</CustomTableCellSmall>
-                <CustomTableCellSmall align="right">
-                  Cumulative
-                </CustomTableCellSmall>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {props.rows2.map((row) => (
-                <TableRow key={row.name}>
-                  <CustomTableCellBodyHeader component="th" scope="row">
-                    {row.name}
-                  </CustomTableCellBodyHeader>
-                  <CustomTableCellSmall>{row.calories}</CustomTableCellSmall>
-                  <CustomTableCellSmall>{row.fat}</CustomTableCellSmall>
                 </TableRow>
               ))}
             </TableBody>

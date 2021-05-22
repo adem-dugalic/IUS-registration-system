@@ -1,6 +1,6 @@
 import React from "react";
-import Schedule from "../../Components/Schedule";
-import Layout from "../../Components/Layout";
+import Schedule from "../../../Components/Schedule";
+import Layout from "../../../Components/Layout";
 
 import { createStyles, makeStyles } from "@material-ui/core";
 

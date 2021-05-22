@@ -159,7 +159,7 @@ export default function ResponsiveDrawer(props) {
               </ListItemIcon>
               <Link
                 className={classes.link}
-                href="/home"
+                href="/student/home"
                 onClick={() => props.mobileOpenFunction(false)}
               >
                 <ListItemText primary="Home" />
@@ -171,7 +171,7 @@ export default function ResponsiveDrawer(props) {
               </ListItemIcon>
               <Link
                 className={classes.link}
-                href="/grades"
+                href="/student/grades"
                 onClick={() => props.mobileOpenFunction(false)}
               >
                 <ListItemText primary="Grades" />
@@ -184,7 +184,7 @@ export default function ResponsiveDrawer(props) {
               </ListItemIcon>
               <Link
                 className={classes.link}
-                href="/registration"
+                href="/student/registration"
                 onClick={() => props.mobileOpenFunction(false)}
               >
                 <ListItemText primary="Registration" />
@@ -197,7 +197,7 @@ export default function ResponsiveDrawer(props) {
               </ListItemIcon>
               <Link
                 className={classes.link}
-                href="/transcript"
+                href="/student/transcript"
                 onClick={() => props.mobileOpenFunction(false)}
               >
                 <ListItemText primary="Transcript" />
@@ -209,7 +209,7 @@ export default function ResponsiveDrawer(props) {
               </ListItemIcon>
               <Link
                 className={classes.link}
-                href="/payment"
+                href="/student/contract"
                 onClick={() => props.mobileOpenFunction(false)}
               >
                 <ListItemText primary="Contract and payment" />
@@ -222,7 +222,7 @@ export default function ResponsiveDrawer(props) {
               </ListItemIcon>
               <Link
                 className={classes.link}
-                href="/schedule"
+                href="/student/schedule"
                 onClick={() => props.mobileOpenFunction(false)}
               >
                 <ListItemText primary="Schedule" />

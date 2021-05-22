@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Layout from "../../../Components/Layout";
-import CourseTable from "../../../Components/CourseTable";
-import RegistrationMenu from "../../../Components/RegistrationMenu";
+import Layout from "../../../../Components/Layout";
+import CourseTable from "../../../../Components/CourseTable";
+import RegistrationMenu from "../../../../Components/RegistrationMenu";
 import { createStyles, makeStyles, withStyles } from "@material-ui/core";
 
 import Table from "@material-ui/core/Table";

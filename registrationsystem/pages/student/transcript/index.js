@@ -1,19 +1,22 @@
 import React, { useState } from "react";
-import Layout from "../../Components/Layout";
-import TranscriptTable from "../../Components/TranscriptTable";
-import TranscriptLayout from "../../Components/TranscriptLayout";
+import Layout from "../../../Components/Layout";
+import TranscriptTable from "../../../Components/TranscriptTable";
+import TranscriptLayout from "../../../Components/TranscriptLayout";
 import { createStyles, Grid, makeStyles, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles(() =>
   createStyles({
     root: {
-      backgroundColor: "rgb(255, 255, 255, 0.7)",
+      backgroundColor: "rgb(255, 255, 255, 0.8)",
       height: "100%",
       paddingTop: "5%",
       paddingBottom: "5%",
+      paddingRight: "2%",
+      paddingLeft: "2%",
     },
     centered: {
       textAlign: "center",
+      fontWeight: 900,
     },
     generalInfo: {
       marginTop: "5%",
