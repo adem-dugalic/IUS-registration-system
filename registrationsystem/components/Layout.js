@@ -65,6 +65,7 @@ const Layout = (props) => {
         <Drawer
           mobileOpenFunction={props.setMobileOpen}
           mobileOpen={props.mobileOpen}
+          user={"admin"}
         />
         <main className={classes.main}>
           <div className={classes.bardDiv}>
