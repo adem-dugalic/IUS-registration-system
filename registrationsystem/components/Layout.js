@@ -29,7 +29,7 @@ const useStyles = makeStyles(() =>
       width: "100%",
       height: "100%",
       display: "flex",
-      backgroundColor: "rgb(95, 91, 91, 0.8)",
+      backgroundColor: "rgb(255, 255, 255, 0.8)",
       // paddingLeft: 10,
     },
     main: {
@@ -63,6 +63,7 @@ const Layout = (props) => {
   const classes = useStyles();
   const mainPanel = React.createRef();
   const [color, setColor] = React.useState("blue");
+  const [curPage, setCurPage] = React.useState("Home");
   const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
   const [mobileOpen, setMobileOpen] = React.useState(false);
   //const [isMobile, setisMobile] = useState(props.mobile);
@@ -93,6 +94,7 @@ const Layout = (props) => {
           routes={routes}
           logoText={"IUS Student"}
           handleDrawerToggle={handleDrawerToggle}
+          setCurPage={setCurPage}
           open={mobileOpen}
           color={color}
           // {...rest}
@@ -100,6 +102,7 @@ const Layout = (props) => {
         <main className={classes.main}>
           <Navbar
             routes={routes}
+            curPage={curPage}
             handleDrawerToggle={handleDrawerToggle}
             // {...rest}
           />
