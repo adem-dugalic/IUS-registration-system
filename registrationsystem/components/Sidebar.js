@@ -1,8 +1,5 @@
-/*eslint-disable*/
 import React from "react";
 import classNames from "classnames";
-import PropTypes from "prop-types";
-import CLink from "./CLink";
 import Link from "next/link";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -44,6 +41,7 @@ export default function Sidebar(props) {
         const whiteFontClasses = classNames({
           [" " + classes.whiteFont]: activeRoute(prop.path),
         });
+        if (activeRoute(prop.path)) props.setCurPage(prop.name);
         return (
           <Link
             href={prop.path}
