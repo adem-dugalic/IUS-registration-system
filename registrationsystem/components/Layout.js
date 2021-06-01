@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import Bar from "./Bar";
 import Drawer from "./Drawer";
+import Sidebar from "./Sidebar";
+import Navbar from "./Navbars/Navbar.js";
 import {
   makeStyles,
   useTheme,
   Theme,
   createStyles,
 } from "@material-ui/core/styles";
+import routes from "../routes";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -58,18 +61,50 @@ function getWindowDimensions() {
 
 const Layout = (props) => {
   const classes = useStyles();
-  const [isMobile, setisMobile] = useState(props.mobile);
+  const mainPanel = React.createRef();
+  const [color, setColor] = React.useState("blue");
+  const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  //const [isMobile, setisMobile] = useState(props.mobile);
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+  const resizeFunction = () => {
+    if (window.innerWidth >= 960) {
+      setMobileOpen(false);
+    }
+  };
+  React.useEffect(() => {
+    window.addEventListener("resize", resizeFunction);
+    // Specify how to clean up after this effect:
+    return function cleanup() {
+      window.removeEventListener("resize", resizeFunction);
+    };
+  }, [mainPanel]);
   return (
     <div className={classes.root}>
       <div className={classes.pannelDiv}>
-        <Drawer
+        {/* <Drawer
           mobileOpenFunction={props.setMobileOpen}
           mobileOpen={props.mobileOpen}
           user={"admin"}
+        /> */}
+        <Sidebar
+          routes={routes}
+          logoText={"IUS Student"}
+          handleDrawerToggle={handleDrawerToggle}
+          open={mobileOpen}
+          color={color}
+          // {...rest}
         />
         <main className={classes.main}>
-          <div className={classes.bardDiv}>
-            {/* {isMobile ? (
+          <Navbar
+            routes={routes}
+            handleDrawerToggle={handleDrawerToggle}
+            // {...rest}
+          />
+          {/* <div className={classes.bardDiv}> */}
+          {/* {isMobile ? (
               <Bar
                 setMobileOpen={props.setMobileOpen}
                 mobileOpen={props.mobileOpen}
@@ -77,7 +112,7 @@ const Layout = (props) => {
             ) : (
               ""
             )} */}
-          </div>
+          {/* </div> */}
           <div className={classes.workArea}>{props.children}</div>
         </main>
       </div>
