@@ -6,8 +6,12 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       position: "relative",
-      left: "30%",
-      top: "25%",
+      left: "50%",
+      transform: "translate(-50%)",
+      marginTop: "5%",
+    },
+    typ: {
+      textAlign: "center",
     },
   })
 );
@@ -15,8 +19,13 @@ const useStyles = makeStyles((theme) =>
 export default function Welcome() {
   const classes = useStyles();
   return (
-    <Typography variant="h4" className={classes.root}>
-      WELCOME TO IUS SYSTEM
-    </Typography>
+    <div className={classes.root}>
+      <Typography variant="h3" className={classes.typ}>
+        IUS System registration
+      </Typography>
+      <Typography variant="h4" className={classes.typ}>
+        Student panel
+      </Typography>
+    </div>
   );
 }
