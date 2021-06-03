@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import Bar from "./Bar";
-import Drawer from "./Drawer";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbars/Navbar.js";
 import {
@@ -35,7 +33,7 @@ const useStyles = makeStyles(() =>
     main: {
       position: "relaive",
       width: "100%",
-      // overflowY: "auto",
+      //overflowY: "auto",
     },
     barDiv: {
       position: "sticky",
@@ -50,14 +48,14 @@ const useStyles = makeStyles(() =>
   })
 );
 
-function getWindowDimensions() {
-  if (typeof window !== "undefined") {
-    const { innerWidth: width, innerHeight: height } = window;
-    if (width < 800) {
-      return true;
-    } else return false;
-  }
-}
+// function getWindowDimensions() {
+//   if (typeof window !== "undefined") {
+//     const { innerWidth: width, innerHeight: height } = window;
+//     if (width < 800) {
+//       return true;
+//     } else return false;
+//   }
+// }
 
 const Layout = (props) => {
   const classes = useStyles();
