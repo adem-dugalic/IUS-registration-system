@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) =>
       left: "50%",
       transform: "translate(-50%)",
       marginTop: "5%",
+      padding: 20,
     },
     typ: {
       textAlign: "center",

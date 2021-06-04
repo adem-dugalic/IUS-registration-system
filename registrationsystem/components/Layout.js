@@ -7,7 +7,9 @@ import {
   Theme,
   createStyles,
 } from "@material-ui/core/styles";
-import routes from "../routes";
+import studentRoutes from "../studentRoutes";
+import adminRoutes from "../adminRoutes";
+import professorRoutes from "../professorRoutes";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -59,6 +61,7 @@ const useStyles = makeStyles(() =>
 
 const Layout = (props) => {
   const classes = useStyles();
+  const [user, setUser] = useState("student"); //smt like Cokie.user??
   const mainPanel = React.createRef();
   const [color, setColor] = React.useState("blue");
   const [curPage, setCurPage] = React.useState("Home");
@@ -73,6 +76,15 @@ const Layout = (props) => {
       setMobileOpen(false);
     }
   };
+  function whichuser() {
+    if (user === "student") {
+      return studentRoutes;
+    } else if (user === "professor") {
+      return professorRoutes;
+    } else {
+      return adminRoutes;
+    }
+  }
   React.useEffect(() => {
     window.addEventListener("resize", resizeFunction);
     // Specify how to clean up after this effect:
@@ -89,7 +101,7 @@ const Layout = (props) => {
           user={"admin"}
         /> */}
         <Sidebar
-          routes={routes}
+          routes={whichuser()}
           logoText={"IUS Student"}
           handleDrawerToggle={handleDrawerToggle}
           setCurPage={setCurPage}
@@ -99,7 +111,7 @@ const Layout = (props) => {
         />
         <main className={classes.main}>
           <Navbar
-            routes={routes}
+            routes={whichuser()}
             curPage={curPage}
             handleDrawerToggle={handleDrawerToggle}
             // {...rest}

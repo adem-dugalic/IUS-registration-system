@@ -5,10 +5,6 @@ import Welcome from "../../../Components/Welcome";
 
 const Home = (props) => {
   const [user, serUser] = useState("admin");
-  return (
-    <Layout mobile={false} user={user}>
-      <Welcome />
-    </Layout>
-  );
+  return <Layout mobile={false} user={user}></Layout>;
 };
 export default Home;
