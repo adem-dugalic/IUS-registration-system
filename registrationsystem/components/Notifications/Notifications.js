@@ -5,42 +5,19 @@ import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 import AddAlert from "@material-ui/icons/AddAlert";
 // core components
-import GridItem from "../Grid/GridItem.js";
-import GridContainer from "../Grid/GridContainer.js";
-import Button from "../CustomButtons/Button.js";
 import SnackbarContent from "../Snackbar/SnackbarContent.js";
-import Snackbar from "../Snackbar/Snackbar.js";
-import Card from "../Card/Card.js";
-import CardHeader from "../Card/CardHeader.js";
-import CardBody from "../Card/CardBody.js";
+import { Grid, Typography } from "@material-ui/core";
 
 const styles = {
-  cardCategoryWhite: {
-    "&,& a,& a:hover,& a:focus": {
-      color: "rgba(255,255,255,.62)",
-      margin: "0",
-      fontSize: "14px",
-      marginTop: "0",
-      marginBottom: "0",
-    },
-    "& a,& a:hover,& a:focus": {
-      color: "#FFFFFF",
-    },
+  homeGrid: {
+    position: "relative",
+    width: "90%",
+    left: "50%",
+    transform: "translate(-50%)",
   },
-  cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none",
-    "& small": {
-      color: "#777",
-      fontSize: "65%",
-      fontWeight: "400",
-      lineHeight: "1",
-    },
+  activity: {
+    textAlign: "center",
+    padding: 20,
   },
 };
 
@@ -49,14 +26,33 @@ const useStyles = makeStyles(styles);
 export default function Notifications() {
   const classes = useStyles();
   return (
-    <GridContainer>
-      <GridItem xs={12} sm={12} md={6}>
-        <h5>Notifications Style</h5>
-        <br />
-        <SnackbarContent message={"This is a plain notification"} />
+    <Grid container className={classes.homeGrid}>
+      <Grid item xs={12} sm={12} md={12}>
+        <Typography className={classes.activity}>
+          Recent News and Actvity
+        </Typography>
+      </Grid>
+      <Grid item xs={12} sm={12} md={12}>
         <SnackbarContent
-          message={"This is a notification with close button."}
+          message={
+            'INFO - This is a regular notification made with color="info"'
+          }
           close
+          color="info"
+        />
+        <SnackbarContent
+          message={
+            'SUCCESS - This is a regular notification made with color="success"'
+          }
+          close
+          color="success"
+        />
+        <SnackbarContent
+          message={
+            'WARNING - This is a regular notification made with color="warning"'
+          }
+          close
+          color="warning"
         />
         <SnackbarContent
           message={"This is a notification with close button and icon."}
@@ -70,8 +66,8 @@ export default function Notifications() {
           close
           icon={AddAlert}
         />
-      </GridItem>
-      <GridItem xs={12} sm={12} md={6}>
+      </Grid>
+      {/* <GridItem xs={12} sm={12} md={6}>
         <h5>Notifications States</h5>
         <br />
         <SnackbarContent
@@ -109,7 +105,7 @@ export default function Notifications() {
           close
           color="primary"
         />
-      </GridItem>
-    </GridContainer>
+      </GridItem> */}
+    </Grid>
   );
 }
