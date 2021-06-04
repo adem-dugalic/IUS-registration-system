@@ -9,6 +9,7 @@ const UserSchema = new Schema({
     semester: {type: Number, required:false},
     /*password: {type: String, required: true},*/
     email: {type: String, required: true, unique: true},
+    paid: {type: Boolean, default:false},
     isSAO: {type: Boolean, default:false},
     isAdmin: {type: Boolean, default:false},
     isDeleted: {type: Boolean,default:false}
