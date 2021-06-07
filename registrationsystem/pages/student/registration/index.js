@@ -57,7 +57,6 @@ const index = () => {
   const classes = useStyles();
   return (
     <Layout mobile={true}>
-      <RegistrationMenu />
       <div className={classes.root}>
         <Grid container spacing={3} className={classes.rootGrid}>
           <Grid item xs={12} className={classes.semensterInfo}>

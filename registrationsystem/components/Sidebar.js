@@ -2,7 +2,11 @@ import React from "react";
 import classNames from "classnames";
 import Link from "next/link";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {
+  MuiThemeProvider,
+  createMuiTheme,
+  makeStyles,
+} from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import List from "@material-ui/core/List";
@@ -14,6 +18,16 @@ import AdminNavbarLinks from "./Navbars/AdminNavbarLinks.js";
 import styles from "../assents/jss/material-dashboard-react/components/sidebarStyle.js";
 
 const useStyles = makeStyles(styles);
+const theme = createMuiTheme({
+  overrides: {
+    MuiDrawer: {
+      // Name of the component ⚛️ / style sheet
+      docked: {
+        height: "100%",
+      },
+    },
+  },
+});
 
 export default function Sidebar(props) {
   const classes = useStyles();
@@ -87,50 +101,52 @@ export default function Sidebar(props) {
     </div>
   );
   return (
-    <div>
-      <Hidden mdUp implementation="css">
-        <Drawer
-          variant="temporary"
-          anchor={props.rtlActive ? "left" : "right"}
-          open={props.open}
-          classes={{
-            paper: classNames(classes.drawerPaper),
-          }}
-          onClose={props.handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-        >
-          {brand}
-          <div className={classes.sidebarWrapper}>
-            <AdminNavbarLinks />
-            {links}
-          </div>
-          {/*  */}
-          <div
-            className={classes.background}
-            style={{ backgroundImage: "url(/ius2.jpg)" }}
-          />
-          {/*  */}
-        </Drawer>
-      </Hidden>
-      <Hidden smDown implementation="css">
-        <Drawer
-          anchor={props.rtlActive ? "right" : "left"}
-          variant="permanent"
-          open
-          classes={{
-            paper: classNames(classes.drawerPaper),
-          }}
-        >
-          {brand}
-          <div className={classes.sidebarWrapper}>{links}</div>
-          <div
-            className={classes.background}
-            style={{ backgroundImage: "url(/ius2.jpg)" }}
-          />
-        </Drawer>
-      </Hidden>
-    </div>
+    <MuiThemeProvider theme={theme}>
+      <div style={{ height: "100%" }}>
+        <Hidden mdUp>
+          <Drawer
+            variant="temporary"
+            anchor={props.rtlActive ? "left" : "right"}
+            open={props.open}
+            classes={{
+              paper: classNames(classes.drawerPaper),
+            }}
+            onClose={props.handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+          >
+            {brand}
+            <div className={classes.sidebarWrapper}>
+              <AdminNavbarLinks />
+              {links}
+            </div>
+            {/*  */}
+            <div
+              className={classes.background}
+              style={{ backgroundImage: "url(/ius2.jpg)" }}
+            />
+            {/*  */}
+          </Drawer>
+        </Hidden>
+        <Hidden smDown>
+          <Drawer
+            anchor={props.rtlActive ? "right" : "left"}
+            variant="permanent"
+            open
+            classes={{
+              paper: classNames(classes.drawerPaper),
+            }}
+          >
+            {brand}
+            <div className={classes.sidebarWrapper}>{links}</div>
+            <div
+              className={classes.background}
+              style={{ backgroundImage: "url(/ius2.jpg)" }}
+            />
+          </Drawer>
+        </Hidden>
+      </div>
+    </MuiThemeProvider>
   );
 }

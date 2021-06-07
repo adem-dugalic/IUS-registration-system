@@ -7,7 +7,7 @@ const Home = (props) => {
   const [user, serUser] = useState("admin");
   return (
     <Layout mobile={false} user={user}>
-      <Welcome />
+      <div></div>
     </Layout>
   );
 };
