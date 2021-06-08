@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Layout from "../../../../Components/Layout";
 import CourseTable from "../../../../Components/CourseTable";
-import RegistrationMenu from "../../../../Components/RegistrationMenu";
 import { createStyles, makeStyles, withStyles } from "@material-ui/core";
 
 import Table from "@material-ui/core/Table";
@@ -48,7 +47,6 @@ const index = () => {
   const classes = useStyles();
   return (
     <Layout mobile={true}>
-      <RegistrationMenu />
       <div className={classes.root}>
         <Table
           aria-label="collapsible table"

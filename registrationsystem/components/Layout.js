@@ -61,7 +61,7 @@ const useStyles = makeStyles(() =>
 
 const Layout = (props) => {
   const classes = useStyles();
-  const [user, setUser] = useState("admin"); //smt like Cokie.user??
+  const [user, setUser] = useState("student"); //smt like Cokie.user??
   const mainPanel = React.createRef();
   const [color, setColor] = React.useState("blue");
   const [curPage, setCurPage] = React.useState("Home");
