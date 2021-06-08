@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Layout from "../../../Components/Layout";
-import RegistrationMenu from "../../../Components/RegistrationMenu";
 import { createStyles, Grid, makeStyles, Typography } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
