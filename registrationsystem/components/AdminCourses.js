@@ -20,7 +20,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
-import { useUsers } from "../services/userService";
+import { useCourses } from "../services/courseService";
 import {
   infoColor,
   blackColor,
@@ -65,26 +65,6 @@ const CustomTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-// function createData(name, calories, fat, carbs, protein) {
-//   return { name, calories, fat, carbs, protein };
-// }
-
-// const rows = [
-//   createData("Cupcake", 305, 3.7, 67, 4.3),
-//   createData("Donut", 452, 25.0, 51, 4.9),
-//   createData("Eclair", 262, 16.0, 24, 6.0),
-//   createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-//   createData("Gingerbread", 356, 16.0, 49, 3.9),
-//   createData("Honeycomb", 408, 3.2, 87, 6.5),
-//   createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-//   createData("Jelly Bean", 375, 0.0, 94, 0.0),
-//   createData("KitKat", 518, 26.0, 65, 7.0),
-//   createData("Lollipop", 392, 0.2, 98, 0.0),
-//   createData("Marshmallow", 318, 0, 81, 2.0),
-//   createData("Nougat", 360, 19.0, 9, 37.0),
-//   createData("Oreo", 437, 18.0, 63, 4.0),
-// ];
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -113,39 +93,21 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: "userId",
+    id: "courseId",
     numeric: false,
     disablePadding: true,
-    label: "User ID",
+    label: "Course ID",
   },
   { id: "Name", numeric: true, disablePadding: false, label: "Name" },
-  { id: "Surname", numeric: true, disablePadding: false, label: "Surname" },
-  { id: "Email", numeric: true, disablePadding: false, label: "Email" },
+  { id: "Professor", numeric: true, disablePadding: false, label: "Professor" },
+  { id: "Faculty", numeric: true, disablePadding: false, label: "Faculty" },
   {
-    id: "isAdmin",
+    id: "Pre-requisites",
     numeric: true,
     disablePadding: false,
-    label: "isAdmin",
+    label: "Pre-requisites",
   },
 ];
-
-// const headCells = [
-//   {
-//     id: "courseId",
-//     numeric: false,
-//     disablePadding: true,
-//     label: "Course ID",
-//   },
-//   { id: "Name", numeric: true, disablePadding: false, label: "Name" },
-//   { id: "Professor", numeric: true, disablePadding: false, label: "Professor" },
-//   { id: "Faculty", numeric: true, disablePadding: false, label: "Faculty" },
-//   {
-//     id: "Pre-requisites",
-//     numeric: true,
-//     disablePadding: false,
-//     label: "Pre-requisites",
-//   },
-// ];
 
 function EnhancedTableHead(props) {
   const {
@@ -228,57 +190,6 @@ const useToolbarStyles = makeStyles((theme) => ({
   },
 }));
 
-// const EnhancedTableToolbar = (props) => {
-//   const classes = useToolbarStyles();
-//   const { numSelected } = props;
-
-//   return (
-//     <Toolbar
-//       className={clsx(classes.root, {
-//         [classes.highlight]: numSelected > 0,
-//       })}
-//     >
-//       {numSelected > 0 ? (
-//         <Typography
-//           className={classes.title}
-//           color="inherit"
-//           variant="subtitle1"
-//           component="div"
-//         >
-//           {numSelected} selected
-//         </Typography>
-//       ) : (
-//         <Typography
-//           className={classes.title}
-//           variant="h6"
-//           id="tableTitle"
-//           component="div"
-//         >
-//           Nutrition
-//         </Typography>
-//       )}
-
-//       {numSelected > 0 ? (
-//         <Tooltip title="Delete">
-//           <IconButton aria-label="delete">
-//             <DeleteIcon />
-//           </IconButton>
-//         </Tooltip>
-//       ) : (
-//         <Tooltip title="Filter list">
-//           <IconButton aria-label="filter list">
-//             <FilterListIcon />
-//           </IconButton>
-//         </Tooltip>
-//       )}
-//     </Toolbar>
-//   );
-// };
-
-// EnhancedTableToolbar.propTypes = {
-//   numSelected: PropTypes.number.isRequired,
-// };
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -311,9 +222,9 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const { data: users, status, refetch } = useUsers();
-  console.log(users);
-  if (users === undefined) {
+  const { data: courses, status, refetch } = useCourses();
+  console.log(courses);
+  if (courses === undefined) {
     return null;
   }
   const handleRequestSort = (event, property) => {
@@ -324,7 +235,7 @@ export default function EnhancedTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = users.data.map((n) => n.name);
+      const newSelecteds = courses.data.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -367,8 +278,9 @@ export default function EnhancedTable() {
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, users.data.length - page * rowsPerPage);
-  if (users !== undefined) {
+    rowsPerPage -
+    Math.min(rowsPerPage, courses.data.length - page * rowsPerPage);
+  if (courses !== undefined) {
     return (
       <div className={classes.root}>
         <Paper className={classes.paper}>
@@ -387,10 +299,10 @@ export default function EnhancedTable() {
                 orderBy={orderBy}
                 onSelectAllClick={handleSelectAllClick}
                 onRequestSort={handleRequestSort}
-                rowCount={users.data.length}
+                rowCount={courses.data.length}
               />
               <TableBody>
-                {stableSort(users.data, getComparator(order, orderBy))
+                {stableSort(courses.data, getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
                     const isItemSelected = isSelected(row.name);
@@ -419,14 +331,12 @@ export default function EnhancedTable() {
                           scope="row"
                           padding="none"
                         >
-                          {row.userID}
+                          {row.course_id}
                         </TableCell>
-                        <TableCell align="right">{row.name}</TableCell>
-                        <TableCell align="right">{row.surname}</TableCell>
-                        <TableCell align="right">{row.email}</TableCell>
-                        <TableCell align="right">
-                          {row.isAdmin ? "yes" : "no"}
-                        </TableCell>
+                        <TableCell align="right">{row.course_name}</TableCell>
+                        <TableCell align="right">{row.Lecturer}</TableCell>
+                        <TableCell align="right">{row.AcademicUnit}</TableCell>
+                        <TableCell align="right">{row.Url}</TableCell>
                       </TableRow>
                     );
                   })}
@@ -441,17 +351,13 @@ export default function EnhancedTable() {
           <TablePagination
             rowsPerPageOptions={[5, 10]}
             component="div"
-            count={users.data.length}
+            count={courses.data.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
           />
         </Paper>
-        {/* <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      /> */}
       </div>
     );
   } else {

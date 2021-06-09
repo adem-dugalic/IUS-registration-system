@@ -97,50 +97,18 @@ export default function AdminNavbarLinks() {
   const handleCloseProfile = () => {
     setOpenProfile(null);
   };
-  function activeRoute() {
+  // function activeRoute() {
+  //   if (router.pathname === "/student/registration") {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  //   console.log(router.pathname);
+  // }
+
+  function switchRender() {
     if (router.pathname === "/student/registration") {
-      return true;
-    } else {
-      return false;
-    }
-    console.log(router.pathname);
-  }
-  // React.useEffect(() => {
-  //   setWinDim(window.innerWidth);
-  //   console.log(winDim);
-  // }, []);
-  return (
-    <div>
-      <div className={classes.searchWrapper}>
-        <CustomInput
-          formControlProps={{
-            className: classes.margin + " " + classes.search,
-          }}
-          inputProps={{
-            placeholder: "Search",
-            inputProps: {
-              "aria-label": "Search",
-            },
-          }}
-        />
-        <Button color="white" aria-label="edit" justIcon round>
-          <Search />
-        </Button>
-      </div>
-      {!activeRoute() ? (
-        <Button
-          color={size.width > 959 ? "transparent" : "white"}
-          justIcon={size.width > 959}
-          simple={!(size.width > 959)}
-          aria-label="Dashboard"
-          className={classes.buttonLink}
-        >
-          <Dashboard className={classes.icons} />
-          <Hidden mdUp implementation="css">
-            <p className={classes.linkText}>Dashboard</p>
-          </Hidden>
-        </Button>
-      ) : (
+      return (
         <div className={classes.manager}>
           <Button
             color={size.width > 959 ? "transparent" : "white"}
@@ -211,7 +179,189 @@ export default function AdminNavbarLinks() {
             )}
           </Poppers>
         </div>
-      )}
+      );
+    } else if (router.pathname === "/admin/users") {
+      return (
+        <div className={classes.manager}>
+          <Button
+            color={size.width > 959 ? "transparent" : "white"}
+            justIcon={size.width > 959}
+            simple={!(size.width > 959)}
+            aria-owns={openMenu ? "menu-list-grow" : null}
+            aria-haspopup="true"
+            onClick={handleClickMenu}
+            className={classes.buttonLink}
+          >
+            <Dashboard className={classes.icons} />
+            {/* <span className={classes.notifications}>5</span> */}
+            <Hidden mdUp implementation="css">
+              <p onClick={handleCloseMenu} className={classes.linkText}>
+                Users
+              </p>
+            </Hidden>
+          </Button>
+          <Poppers
+            open={Boolean(openMenu)}
+            anchorEl={openMenu}
+            transition
+            disablePortal
+            className={
+              classNames({ [classes.popperClose]: !openMenu }) +
+              " " +
+              classes.popperNav
+            }
+          >
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                id="notification-menu-list-grow"
+                style={{
+                  transformOrigin:
+                    placement === "bottom" ? "center top" : "center bottom",
+                }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={handleCloseMenu}>
+                    <MenuList role="menu">
+                      <MenuItem
+                        onClick={handleCloseMenu}
+                        className={classes.dropdownItem}
+                      >
+                        <CLink path="/admin/addUser">Add Users</CLink>
+                      </MenuItem>
+                      {/* <MenuItem
+                    onClick={handleCloseMenu}
+                    className={classes.dropdownItem}
+                  >
+                    <CLink path="/student/registration/addCourses">
+                      Add Courses
+                    </CLink>
+                  </MenuItem> */}
+                      {/* <MenuItem
+                    onClick={handleCloseMenu}
+                    className={classes.dropdownItem}
+                  >
+                    <CLink path="/student/schedule">Schedule</CLink>
+                  </MenuItem> */}
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Poppers>
+        </div>
+      );
+    } else if (router.pathname === "/admin/courses") {
+      return (
+        <div className={classes.manager}>
+          <Button
+            color={size.width > 959 ? "transparent" : "white"}
+            justIcon={size.width > 959}
+            simple={!(size.width > 959)}
+            aria-owns={openMenu ? "menu-list-grow" : null}
+            aria-haspopup="true"
+            onClick={handleClickMenu}
+            className={classes.buttonLink}
+          >
+            <Dashboard className={classes.icons} />
+            {/* <span className={classes.notifications}>5</span> */}
+            <Hidden mdUp implementation="css">
+              <p onClick={handleCloseMenu} className={classes.linkText}>
+                Courses
+              </p>
+            </Hidden>
+          </Button>
+          <Poppers
+            open={Boolean(openMenu)}
+            anchorEl={openMenu}
+            transition
+            disablePortal
+            className={
+              classNames({ [classes.popperClose]: !openMenu }) +
+              " " +
+              classes.popperNav
+            }
+          >
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                id="notification-menu-list-grow"
+                style={{
+                  transformOrigin:
+                    placement === "bottom" ? "center top" : "center bottom",
+                }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={handleCloseMenu}>
+                    <MenuList role="menu">
+                      <MenuItem
+                        onClick={handleCloseMenu}
+                        className={classes.dropdownItem}
+                      >
+                        <CLink path="/admin/addCourse">Add a course</CLink>
+                      </MenuItem>
+                      {/* <MenuItem
+                onClick={handleCloseMenu}
+                className={classes.dropdownItem}
+              >
+                <CLink path="/student/registration/addCourses">
+                  Add Courses
+                </CLink>
+              </MenuItem> */}
+                      {/* <MenuItem
+                onClick={handleCloseMenu}
+                className={classes.dropdownItem}
+              >
+                <CLink path="/student/schedule">Schedule</CLink>
+              </MenuItem> */}
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Poppers>
+        </div>
+      );
+    } else {
+      return (
+        <Button
+          color={size.width > 959 ? "transparent" : "white"}
+          justIcon={size.width > 959}
+          simple={!(size.width > 959)}
+          aria-label="Dashboard"
+          className={classes.buttonLink}
+        >
+          <Dashboard className={classes.icons} />
+          <Hidden mdUp implementation="css">
+            <p className={classes.linkText}>Dashboard</p>
+          </Hidden>
+        </Button>
+      );
+    }
+  }
+  // React.useEffect(() => {
+  //   setWinDim(window.innerWidth);
+  //   console.log(winDim);
+  // }, []);
+  return (
+    <div>
+      <div className={classes.searchWrapper}>
+        <CustomInput
+          formControlProps={{
+            className: classes.margin + " " + classes.search,
+          }}
+          inputProps={{
+            placeholder: "Search",
+            inputProps: {
+              "aria-label": "Search",
+            },
+          }}
+        />
+        <Button color="white" aria-label="edit" justIcon round>
+          <Search />
+        </Button>
+      </div>
+      {switchRender()}
       {/*  */}
       <div className={classes.manager}>
         <Button

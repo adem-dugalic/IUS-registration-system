@@ -5,6 +5,7 @@ import Profile from "../../../Components/Profile";
 import ProfileCourses from "../../../Components/ProfileCourses";
 import ProfileGrades from "../../../Components/ProfileGrades";
 import Layout from "../../../Components/Layout";
+import AdminCourses from "../../../Components/AdminCourses";
 import { createStyles, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(() =>
@@ -31,12 +32,12 @@ const Courses = (props) => {
   return (
     <Layout>
       <div className={classes.root}>
-        <div className={classes.innerRoot}>
-          {/* <AllCourses /> */}
+        {/* <div className={classes.innerRoot}>
           <Profile />
           <ProfileCourses />
           <ProfileGrades />
-        </div>
+        </div> */}
+        <AdminCourses />
       </div>
     </Layout>
   );

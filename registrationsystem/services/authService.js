@@ -3,7 +3,8 @@ import { httpClient } from "../utilities/httpClient";
 
 export const useLogin = () => {
   return useMutation(
-    async (loginData) => await httpClient.post("api/auth/login", loginData),
+    async (loginData) =>
+      await httpClient.post("api/authentication/login", loginData),
     {
       onSuccess: () => {
         // cache.invalidateQueries('loginUser')
@@ -17,7 +18,7 @@ export const useLogin = () => {
 
 export const useRegister = () => {
   return useMutation(
-    async (data) => await httpClient.post("api/auth/register", data),
+    async (data) => await httpClient.post("api/authentication/signup", data),
     {
       onSuccess: () => {
         // cache.invalidateQueries('loginUser')
