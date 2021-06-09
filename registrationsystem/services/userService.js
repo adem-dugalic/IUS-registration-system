@@ -1,22 +1,7 @@
-/*
-####################################################################
-Decks services - here we will have exports for all the services used
-for decks.
-
-@services:
- - useDecks() - return all decks from the database, should return in
-                format IDeck
-@return 
-        - useDecks() 
-@edited Adem Dugalić
-####################################################################
-*/
 import { useInfiniteQuery, useMutation, useQuery } from "react-query";
 import { httpClient } from "../utilities/httpClient";
-import React from "react";
 
 export function useUsers() {
-  //Unable to use infinite query for some reason than it does not pass the interface corrcetly and it can not be read
   return useQuery(
     "users",
     async () => {
@@ -37,7 +22,7 @@ export function useUsers() {
 export function useGetUser(userID) {
   //Unable to use infinite query for some reason than it does not pass the interface corrcetly and it can not be read
   return useQuery(
-    "users",
+    "user",
     async () => {
       const { data } = await httpClient.get(`/users/${userID}`);
       return data;
@@ -62,27 +47,17 @@ export function useCreateUser() {
 }
 
 //Delete Deck
-export function useDeleteDeck(deckId) {
-  return (
-    useMutation < any,
-    any,
-    any >
-      (async () => {
-        const res = await httpClient.delete(`/api/games/deck/${deckId}`);
-        return res;
-      })
-  );
+export function useDeleteUser(userID) {
+  return useMutation(async () => {
+    const res = await httpClient.delete(`/users/${userID}`);
+    return res;
+  });
 }
 
 //Edit deck
-export function useEditDeck(deckId) {
-  return (
-    useMutation < any,
-    any,
-    any >
-      (async (data) => {
-        const res = await httpClient.put(`/api/games/deck/${deckId}`, data);
-        return res;
-      })
-  );
+export function useEditUser(userID) {
+  return useMutation(async (data) => {
+    const res = await httpClient.put(`/users/${userID}`, data);
+    return res;
+  });
 }
