@@ -10,6 +10,7 @@ import {
 import studentRoutes from "../studentRoutes";
 import adminRoutes from "../adminRoutes";
 import professorRoutes from "../professorRoutes";
+// import { useUsers } from "../services/userService";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -61,12 +62,14 @@ const useStyles = makeStyles(() =>
 
 const Layout = (props) => {
   const classes = useStyles();
-  const [user, setUser] = useState("student"); //smt like Cokie.user??
+  const [user, setUser] = useState("admin"); //smt like Cokie.user??
   const mainPanel = React.createRef();
   const [color, setColor] = React.useState("blue");
   const [curPage, setCurPage] = React.useState("Home");
   const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  // const { data: users, status, refetch } = useUsers();
+  // console.log(users);
   //const [isMobile, setisMobile] = useState(props.mobile);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -101,8 +104,8 @@ const Layout = (props) => {
           user={"admin"}
         /> */}
         <Sidebar
-          routes={whichuser()}
-          logoText={"IUS Student"}
+          routes={whichuser("professor")}
+          logoText={"Tarik Muharem"}
           handleDrawerToggle={handleDrawerToggle}
           setCurPage={setCurPage}
           open={mobileOpen}

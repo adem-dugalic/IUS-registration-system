@@ -1,4 +1,6 @@
-const mongoose = require('mongoose');
+import mongoose  from 'mongoose';
+
+const Schema = mongoose.Schema;
 
 const UserCourseDetailsSchema = new Schema({
     userId: {type: String, required: true},

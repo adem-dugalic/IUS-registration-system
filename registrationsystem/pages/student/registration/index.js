@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Layout from "../../../Components/Layout";
-import RegistrationMenu from "../../../Components/RegistrationMenu";
 import { createStyles, Grid, makeStyles, Typography } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -57,7 +56,6 @@ const index = () => {
   const classes = useStyles();
   return (
     <Layout mobile={true}>
-      <RegistrationMenu />
       <div className={classes.root}>
         <Grid container spacing={3} className={classes.rootGrid}>
           <Grid item xs={12} className={classes.semensterInfo}>

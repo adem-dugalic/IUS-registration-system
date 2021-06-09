@@ -15,11 +15,6 @@ const dashboardRoutes = [
     icon: Dashboard,
   },
   {
-    path: "/professor/students",
-    name: "Students",
-    icon: Person,
-  },
-  {
     path: "/professor/courses",
     name: "Courses",
     icon: "content_paste",
@@ -28,7 +23,7 @@ const dashboardRoutes = [
     path: "/professor/approval",
     name: "Approval",
     icon: LibraryBooks,
-  },
+  }
 ];
 
 export default dashboardRoutes;
