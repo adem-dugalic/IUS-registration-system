@@ -10,7 +10,7 @@ import {
 import studentRoutes from "../studentRoutes";
 import adminRoutes from "../adminRoutes";
 import professorRoutes from "../professorRoutes";
-import { useUser } from "../services/userService";
+import { useUsers } from "../services/userService";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -68,7 +68,7 @@ const Layout = (props) => {
   const [curPage, setCurPage] = React.useState("Home");
   const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const { data: users, status, refetch } = useUser();
+  const { data: users, status, refetch } = useUsers();
   console.log(users);
   //const [isMobile, setisMobile] = useState(props.mobile);
   const handleDrawerToggle = () => {
