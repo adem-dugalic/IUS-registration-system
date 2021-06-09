@@ -30,6 +30,6 @@ UserSchema.methods.validPassword = function(password) {
     return bcryptjs.compareSync(password,this.password);
 };
 
-const User = mongoose.model('User',UserSchema);
+const User = mongoose.models.Course || mongoose.model('User',UserSchema);
 
 module.exports = User;

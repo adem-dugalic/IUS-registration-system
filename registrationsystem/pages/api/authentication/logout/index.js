@@ -1,13 +1,12 @@
-import dbConnect from '../../../utilities/dbConnect';
-import User from '../../../models/User';
-import UserSession from '../models/UserSession.model';
+import dbConnect from '../../../../utilities/dbConnect';
+import User from '../../../../models/User';
+import UserSession from '../../../../models/UserSession';
+import bcryptjs from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import auth from '../../middleware/auth'
 
 const MongoClient = require('mongodb').MongoClient;
-const assert = require('assert');
-const v4 = require('uuid').v4;
-const jwt = require('jsonwebtoken');
 const jwtSecret = 'SUPERSECRETE20220';
-const auth = require("../middleware/auth");
 
 const saltRounds = 10;
 const url = 'mongodb://localhost:27017';
