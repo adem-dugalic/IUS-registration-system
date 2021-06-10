@@ -10,7 +10,11 @@ import {
 import studentRoutes from "../studentRoutes";
 import adminRoutes from "../adminRoutes";
 import professorRoutes from "../professorRoutes";
+import { useGetUser } from "../services/userService";
 // import { useUsers } from "../services/userService";
+import Cookies from "universal-cookie";
+import { useRouter } from "next/router";
+import { CircularProgress, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -64,10 +68,26 @@ const Layout = (props) => {
   const classes = useStyles();
   const [user, setUser] = useState("admin"); //smt like Cokie.user??
   const mainPanel = React.createRef();
+  let location = useRouter();
   const [color, setColor] = React.useState("blue");
   const [curPage, setCurPage] = React.useState("Home");
   const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const cookies = new Cookies();
+  const { data: mrUser, status, refetch } = useGetUser(cookies.get("userId"));
+  if (status !== "success" && mrUser === undefined) {
+    return (
+      <CircularProgress
+        style={{ position: "relative", left: "50%", top: "50%" }}
+      />
+    );
+  } else if (status === "error") {
+    <Typography variant="h1">ERROR WITH DATA FETCHING</Typography>;
+  }
+  if (cookies.get("token") === undefined) {
+    location.push("/");
+  }
+
   // const { data: users, status, refetch } = useUsers();
   // console.log(users);
   //const [isMobile, setisMobile] = useState(props.mobile);
@@ -80,21 +100,21 @@ const Layout = (props) => {
     }
   };
   function whichuser() {
-    if (user === "student") {
+    if (location.pathname.includes("/student/")) {
       return studentRoutes;
-    } else if (user === "professor") {
+    } else if (location.pathname.includes("/professor/")) {
       return professorRoutes;
     } else {
       return adminRoutes;
     }
   }
-  React.useEffect(() => {
-    window.addEventListener("resize", resizeFunction);
-    // Specify how to clean up after this effect:
-    return function cleanup() {
-      window.removeEventListener("resize", resizeFunction);
-    };
-  }, [mainPanel]);
+  // React.useEffect(() => {
+  //   window.addEventListener("resize", resizeFunction);
+  //   // Specify how to clean up after this effect:
+  //   return function cleanup() {
+  //     window.removeEventListener("resize", resizeFunction);
+  //   };
+  // }, [mainPanel]);
   return (
     <div className={classes.root}>
       <div className={classes.pannelDiv}>
@@ -104,12 +124,12 @@ const Layout = (props) => {
           user={"admin"}
         /> */}
         <Sidebar
-          routes={whichuser("professor")}
-          logoText={"Tarik Muharem"}
+          routes={whichuser()}
           handleDrawerToggle={handleDrawerToggle}
           setCurPage={setCurPage}
           open={mobileOpen}
           color={color}
+          user={mrUser}
           // {...rest}
         />
         <main className={classes.main}>

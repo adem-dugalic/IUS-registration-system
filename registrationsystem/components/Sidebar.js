@@ -1,6 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import Link from "next/link";
+import { useCookies } from "react-cookie";
 // @material-ui/core components
 import {
   MuiThemeProvider,
@@ -16,6 +17,13 @@ import Icon from "@material-ui/core/Icon";
 import { useRouter } from "next/router";
 import AdminNavbarLinks from "./Navbars/AdminNavbarLinks.js";
 import styles from "../assents/jss/material-dashboard-react/components/sidebarStyle.js";
+import { useGetUser } from "../services/userService.js";
+import { useSession } from "../services/userService.js";
+import Cookies from "universal-cookie";
+import { Unarchive } from "@material-ui/icons";
+import { Button } from "@material-ui/core";
+import { useQuery } from "react-query";
+import { httpClient } from "../utilities/httpClient.js";
 
 const useStyles = makeStyles(styles);
 const theme = createMuiTheme({
@@ -32,9 +40,18 @@ const theme = createMuiTheme({
 export default function Sidebar(props) {
   const classes = useStyles();
   let location = useRouter();
+  const user = props.user;
+  const cookies = new Cookies();
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {
     return location.pathname === routeName;
+  }
+
+  function check() {
+    httpClient.get(`/authentication/logout/${cookies.get("userId")}`);
+    cookies.remove(["token", "userId", "isAdmin", "isSAO"]);
+    console.log(status);
+    location.push("/");
   }
   const { color, logoText, routes } = props;
   var links = (
@@ -84,6 +101,36 @@ export default function Sidebar(props) {
           </Link>
         );
       })}
+
+      <ListItem
+        button
+        style={{ position: "absolute", bottom: 10, width: "87%" }}
+        className={
+          classes.itemLink +
+          classNames({
+            [" " + classes[color]]: true,
+          })
+        }
+      >
+        <Button
+          href=""
+          className={classes.item}
+          style={{ width: "100%", textAlign: "left", padding: 0 }}
+          activeClassName="active"
+          onClick={() => {
+            check();
+          }}
+        >
+          <Icon className={classNames(classes.itemIcon, classes.whiteFont)}>
+            <Unarchive />
+          </Icon>
+          <ListItemText
+            primary={props.rtlActive ? prop.rtlName : "Log Out"}
+            className={classNames(classes.itemText, classes.whiteFont)}
+            disableTypography={true}
+          />
+        </Button>
+      </ListItem>
     </List>
   );
   var brand = (
@@ -96,7 +143,7 @@ export default function Sidebar(props) {
         <div className={classes.logoImage}>
           <img src="/IUSlogo2.png" alt="logo" className={classes.img} />
         </div>
-        {logoText}
+        {user !== undefined && user.data.name + " " + user.data.surname}
       </a>
     </div>
   );

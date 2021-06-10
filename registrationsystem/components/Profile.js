@@ -83,6 +83,7 @@ const useStyles = makeStyles(() => ({
 
 function Profile(props) {
   const classes = useStyles();
+  console.log(props);
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -104,23 +105,42 @@ function Profile(props) {
               >
                 <Grid item xs={2}></Grid>
                 <Grid item xs={3} className={classes.centered}>
-                  <Typography>Name: Adem Dugalić</Typography>
+                  <Typography>
+                    Name:{" "}
+                    {props.currentUser.data.name +
+                      " " +
+                      props.currentUser.data.surname}
+                  </Typography>
                 </Grid>
                 <Grid item xs={3} className={classes.centered}>
                   <Typography>Advisor: Someone</Typography>
                 </Grid>
                 <Grid item xs={3} className={classes.centered}>
-                  <Typography>Faculty: CS</Typography>
+                  <Typography>
+                    Faculty: {props.currentUser.data.faculty}
+                  </Typography>
                 </Grid>
                 <Grid item xs={2}></Grid>
                 <Grid item xs={3} className={classes.centered}>
-                  <Typography>Id: 170302071</Typography>
+                  <Typography>Id: {props.currentUser.data.userID}</Typography>
                 </Grid>
                 <Grid item xs={3} className={classes.centered}>
                   <Typography>Courses: 5</Typography>
                 </Grid>
                 <Grid item xs={3} className={classes.centered}>
+                  <Typography>
+                    Program: {props.currentUser.data.program}
+                  </Typography>
+                </Grid>
+                <Grid item xs={2}></Grid>
+                <Grid item xs={3} className={classes.centered}>
+                  <Typography>Email: {props.currentUser.data.email}</Typography>
+                </Grid>
+                <Grid item xs={3} className={classes.centered}>
                   <Typography>Points: 120</Typography>
+                </Grid>
+                <Grid item xs={3} className={classes.centered}>
+                  <Typography>CGPA: 4.0</Typography>
                 </Grid>
               </Grid>
             </Grid>

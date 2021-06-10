@@ -37,6 +37,26 @@ export function useGetUser(userID) {
     }
   );
 }
+
+export function useSession() {
+  //Unable to use infinite query for some reason than it does not pass the interface corrcetly and it can not be read
+  return useQuery(
+    "session",
+    async () => {
+      const { data } = await httpClient.get("/authentication/logout");
+      return data;
+    },
+    {
+      onSuccess() {
+        console.log("succesfully got rid of session");
+      },
+      //We can use this option to refetch for any number og miliseconds
+      //But keep in mind that it will refetch non stop in that set interval
+      //refetchInterval: 1000,
+    }
+  );
+}
+
 //New user
 export function useCreateUser() {
   return useMutation(async (data) => {

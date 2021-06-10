@@ -94,7 +94,7 @@ function UserPanel(props) {
       surname: data.lastName,
       email: data.email,
       userID: data.id,
-      password: data.password,
+      // password: data.password,
       faculty: faculty,
       program: program,
       isAdmin: data.admin,

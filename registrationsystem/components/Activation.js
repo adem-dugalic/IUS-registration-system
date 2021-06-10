@@ -78,23 +78,20 @@ const ValidationTextField = withStyles({
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "relative",
-    backgroundColor: "#ffffff",
     height: "100%",
-  },
-  image: {
-    position: "relative",
-    backgroundImage: "url(/longlogo.jpg)",
-    backgroundRepeat: "no-repeat",
     backgroundColor: "#ffffff",
-    //theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
-    backgroundSize: "contain",
+    backgroundImage: "url(/banner1.jpg)",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
     backgroundPosition: "center",
   },
   rightLogin: {
     position: "relative",
     zIndex: 2,
     color: "#fff",
-    backgroundColor: "transparent",
+    height: "80%",
+    marginTop: "5%",
+    width: "100%",
     [theme.breakpoints.up("sm")]: {
       marginRight: 10,
       paddintTop: 200,
@@ -146,7 +143,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login() {
+export default function Activation() {
   const classes = useStyles();
   const router = useRouter();
   const [userID, setUserID] = useState("");
@@ -155,24 +152,13 @@ export default function Login() {
   // const [mutate, { data, error }] = useCreateUser();
   const mutation = useMutation(
     async (userData) => {
-      const res = await httpClient.post("/authentication/login", userData);
+      const res = await httpClient.post("/authentication/signup", userData);
       return res;
     },
     {
       onSuccess(res) {
-        //setUserID(res.data.userId);
-        cookies.set("token", res.data.token);
-        cookies.set("userId", res.data.userId);
-        cookies.set("isAdmin", res.data.isAdmin);
-        cookies.set("isSAO", res.data.isSAO);
         console.log(res);
-        if (res.data.isAdmin) {
-          router.push("/admin/home");
-        } else if (res.data.isSAO) {
-          router.push("/professor/home");
-        } else {
-          router.push("/student/home");
-        }
+        router.push("/authentication/login");
       },
       //We can use this option to refetch for any number og miliseconds
       //But keep in mind that it will refetch non stop in that set interval
@@ -186,21 +172,21 @@ export default function Login() {
       password: data.password,
     };
     console.log(someone);
-    const bes = mutation.mutate(someone);
+    mutation.mutate(someone);
   };
 
   return (
     <Grid container component="main" className={classes.root}>
       {/* <CssBaseline /> */}
-      <Grid item xs={false} sm={3} md={6} className={classes.image} />
+      <Grid item xs={0} sm={2} md={4}></Grid>
       <Grid
         item
         xs={12}
         sm={8}
-        md={5}
+        md={4}
         className={classes.rightLogin}
         component={Paper}
-        elevation={6}
+        // elevation={6}
         square
       >
         <div className={classes.paper}>
@@ -208,7 +194,7 @@ export default function Login() {
             <LockOutlinedIcon />
           </Avatar> */}
           <Typography component="h1" variant="h5">
-            Login
+            Activation
           </Typography>
           <form
             className={classes.form}
@@ -252,10 +238,6 @@ export default function Login() {
                 style: { color: "#fff" },
               }}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" checked />}
-              label="Remember me"
-            />
             <Button
               //type="submit"
               fullWidth
@@ -265,20 +247,8 @@ export default function Login() {
               className={classes.submit}
               // onClick={() => router.push("/student/home")}
             >
-              Login
+              Activate
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/authentication/activation" variant="body2">
-                  {"Activate the account"}
-                </Link>
-              </Grid>
-            </Grid>
             <Box mt={5}>
               <Copyright />
             </Box>
@@ -289,6 +259,7 @@ export default function Login() {
           style={{ backgroundImage: "url(/ius2.jpg)" }}
         />
       </Grid>
+      <Grid item xs={0} sm={2} md={4}></Grid>
     </Grid>
   );
 }

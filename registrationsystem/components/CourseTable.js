@@ -15,6 +15,11 @@ import Paper from "@material-ui/core/Paper";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { Checkbox } from "@material-ui/core";
+import {
+  infoColor,
+  blackColor,
+  hexToRgb,
+} from "../assents/jss/material-dashboard-react";
 
 const useRowStyles = makeStyles({
   root: {

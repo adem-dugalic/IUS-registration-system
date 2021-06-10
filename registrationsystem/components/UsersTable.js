@@ -401,7 +401,6 @@ export default function EnhancedTable() {
                         hover
                         onClick={(event) => handleClick(event, row.name)}
                         role="checkbox"
-                        s
                         aria-checked={isItemSelected}
                         tabIndex={-1}
                         key={row.name}
