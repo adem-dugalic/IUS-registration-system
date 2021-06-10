@@ -46,6 +46,13 @@ export default (req, res) => {
                         expiresIn: 1,
                         isAdmin: true,
                       });
+                    } else if (user.isSAO) {
+                        res.status(200).json({
+                          userId: user._id,
+                          token: token,
+                          expiresIn: 1,
+                          isSAO: true,
+                        });
                     } else {
                       res.status(200).json({
                         userId: user._id,
