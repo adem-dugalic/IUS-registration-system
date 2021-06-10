@@ -44,6 +44,7 @@ export default (req, res) => {
                         token: token,
                         expiresIn: 1,
                         isAdmin: false,
+                        isSAO: false,
                         name: user.name,
                         surname: user.surname,
                       });
