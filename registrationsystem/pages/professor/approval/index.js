@@ -1,21 +1,28 @@
 import { makeStyles } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useState } from "react";
+import ApprovalTable from "../../../components/ApprovalTable";
+import ClassesMain from "../../../components/ClassesMain";
 import Layout from "../../../Components/Layout";
 import Welcome from "../../../Components/Welcome";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    position: "relative",
+    top: "3%",
+    paddingLeft: "1%",
+    paddingRight: "1%",
   },
 }));
 
-const Home = (props) => {
+const Approval = (props) => {
   const classes = useStyles();
   return (
     <Layout>
-      <Welcome panel={"Professor"} />
+      <div className={classes.root}>
+        <ApprovalTable />
+      </div>
     </Layout>
   );
 };
-export default Home;
+export default Approval;

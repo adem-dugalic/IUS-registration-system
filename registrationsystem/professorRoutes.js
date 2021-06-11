@@ -15,15 +15,15 @@ const dashboardRoutes = [
     icon: Dashboard,
   },
   {
-    path: "/professor/courses",
-    name: "Courses",
+    path: "/professor/classes",
+    name: "Classes",
     icon: "content_paste",
   },
   {
     path: "/professor/approval",
     name: "Approval",
     icon: LibraryBooks,
-  }
+  },
 ];
 
 export default dashboardRoutes;

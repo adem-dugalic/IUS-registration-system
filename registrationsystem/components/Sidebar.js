@@ -41,6 +41,9 @@ export default function Sidebar(props) {
   const classes = useStyles();
   let location = useRouter();
   const user = props.user;
+  // if (!user) {
+  //   return null;
+  // }
   const cookies = new Cookies();
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {

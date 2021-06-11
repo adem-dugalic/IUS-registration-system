@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import clsx from "clsx";
 import { lighten, makeStyles, withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -10,22 +9,23 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
-import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import Checkbox from "@material-ui/core/Checkbox";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
-import DeleteIcon from "@material-ui/icons/Delete";
-import FilterListIcon from "@material-ui/icons/FilterList";
+import Cookies from "universal-cookie";
 import { useUsers } from "../services/userService";
+import IconButton from "@material-ui/core/IconButton";
+import Link from "next/link";
+import EditIcon from "@material-ui/icons/Edit";
 import {
   infoColor,
   blackColor,
   hexToRgb,
 } from "../assents/jss/material-dashboard-react";
+import { useMutation, useQueryClient } from "react-query";
+import { httpClient } from "../utilities/httpClient";
+import Delete from "@material-ui/icons/Delete";
+import { Snackbar } from "@material-ui/core";
 
 const CustomTableHeadRow = withStyles((theme) => ({
   head: {
@@ -64,26 +64,6 @@ const CustomTableCell = withStyles((theme) => ({
     // opacity: "0.2",
   },
 }))(TableCell);
-
-// function createData(name, calories, fat, carbs, protein) {
-//   return { name, calories, fat, carbs, protein };
-// }
-
-// const rows = [
-//   createData("Cupcake", 305, 3.7, 67, 4.3),
-//   createData("Donut", 452, 25.0, 51, 4.9),
-//   createData("Eclair", 262, 16.0, 24, 6.0),
-//   createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-//   createData("Gingerbread", 356, 16.0, 49, 3.9),
-//   createData("Honeycomb", 408, 3.2, 87, 6.5),
-//   createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-//   createData("Jelly Bean", 375, 0.0, 94, 0.0),
-//   createData("KitKat", 518, 26.0, 65, 7.0),
-//   createData("Lollipop", 392, 0.2, 98, 0.0),
-//   createData("Marshmallow", 318, 0, 81, 2.0),
-//   createData("Nougat", 360, 19.0, 9, 37.0),
-//   createData("Oreo", 437, 18.0, 63, 4.0),
-// ];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -127,25 +107,19 @@ const headCells = [
     disablePadding: false,
     label: "isAdmin",
   },
+  {
+    id: "delete",
+    numeric: true,
+    disablePadding: false,
+    label: "Delete",
+  },
+  {
+    id: "edit",
+    numeric: false,
+    disablePadding: false,
+    label: "Edit",
+  },
 ];
-
-// const headCells = [
-//   {
-//     id: "courseId",
-//     numeric: false,
-//     disablePadding: true,
-//     label: "Course ID",
-//   },
-//   { id: "Name", numeric: true, disablePadding: false, label: "Name" },
-//   { id: "Professor", numeric: true, disablePadding: false, label: "Professor" },
-//   { id: "Faculty", numeric: true, disablePadding: false, label: "Faculty" },
-//   {
-//     id: "Pre-requisites",
-//     numeric: true,
-//     disablePadding: false,
-//     label: "Pre-requisites",
-//   },
-// ];
 
 function EnhancedTableHead(props) {
   const {
@@ -228,57 +202,6 @@ const useToolbarStyles = makeStyles((theme) => ({
   },
 }));
 
-// const EnhancedTableToolbar = (props) => {
-//   const classes = useToolbarStyles();
-//   const { numSelected } = props;
-
-//   return (
-//     <Toolbar
-//       className={clsx(classes.root, {
-//         [classes.highlight]: numSelected > 0,
-//       })}
-//     >
-//       {numSelected > 0 ? (
-//         <Typography
-//           className={classes.title}
-//           color="inherit"
-//           variant="subtitle1"
-//           component="div"
-//         >
-//           {numSelected} selected
-//         </Typography>
-//       ) : (
-//         <Typography
-//           className={classes.title}
-//           variant="h6"
-//           id="tableTitle"
-//           component="div"
-//         >
-//           Nutrition
-//         </Typography>
-//       )}
-
-//       {numSelected > 0 ? (
-//         <Tooltip title="Delete">
-//           <IconButton aria-label="delete">
-//             <DeleteIcon />
-//           </IconButton>
-//         </Tooltip>
-//       ) : (
-//         <Tooltip title="Filter list">
-//           <IconButton aria-label="filter list">
-//             <FilterListIcon />
-//           </IconButton>
-//         </Tooltip>
-//       )}
-//     </Toolbar>
-//   );
-// };
-
-// EnhancedTableToolbar.propTypes = {
-//   numSelected: PropTypes.number.isRequired,
-// };
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -304,14 +227,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function EnhancedTable() {
+  const queryClient = useQueryClient();
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
+  const [removed, setRemoved] = React.useState(false);
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const cookies = new Cookies();
+  const [open, setOpen] = React.useState(false);
   const { data: users, status, refetch } = useUsers();
+  const mutation = useMutation((id) => httpClient.delete(`/users/${id}`), {
+    onSuccess: () => {
+      refetch();
+    },
+  });
   console.log(users);
   if (users === undefined) {
     return null;
@@ -365,12 +297,27 @@ export default function EnhancedTable() {
   };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setRemoved(false);
+  };
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, users.data.length - page * rowsPerPage);
   if (users !== undefined) {
     return (
       <div className={classes.root}>
+        <Snackbar
+          message={"SUCCESS - User deleted"}
+          closes
+          open={removed}
+          color="primary"
+          onClose={handleClose}
+          onClick={handleClose}
+        />
         <Paper className={classes.paper}>
           {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
           <TableContainer>
@@ -425,6 +372,28 @@ export default function EnhancedTable() {
                         <TableCell align="right">{row.email}</TableCell>
                         <TableCell align="right">
                           {row.isAdmin ? "yes" : "no"}
+                        </TableCell>
+                        <TableCell align="right">
+                          <IconButton
+                            onClick={() => {
+                              mutation.mutate(row._id);
+                              setRemoved(true);
+                            }}
+                          >
+                            <Delete />
+                          </IconButton>
+                        </TableCell>
+                        <TableCell>
+                          <Link
+                            href={{
+                              pathname: "/admin/editUser/[id]",
+                              query: { id: row._id },
+                            }}
+                          >
+                            <IconButton>
+                              <EditIcon />
+                            </IconButton>
+                          </Link>
                         </TableCell>
                       </TableRow>
                     );

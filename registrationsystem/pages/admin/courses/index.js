@@ -12,9 +12,10 @@ const useStyles = makeStyles(() =>
   createStyles({
     root: {
       position: "relative",
-      top: "5%",
+      width: "90%",
       overflowY: "auto",
-      maxHeight: "100vh",
+      left: "50%",
+      transform: "translate(-50%)",
     },
     innerRoot: {
       position: "relative",

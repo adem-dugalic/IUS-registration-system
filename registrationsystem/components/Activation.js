@@ -176,7 +176,7 @@ export default function Activation() {
   };
 
   return (
-    <Grid container component="main" className={classes.root}>
+    <Grid container className={classes.root}>
       {/* <CssBaseline /> */}
       <Grid item xs={0} sm={2} md={4}></Grid>
       <Grid

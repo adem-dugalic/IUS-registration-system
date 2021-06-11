@@ -10,7 +10,7 @@ import {
 import studentRoutes from "../studentRoutes";
 import adminRoutes from "../adminRoutes";
 import professorRoutes from "../professorRoutes";
-import { useGetUser } from "../services/userService";
+import { useCurrentUser, useGetUser } from "../services/userService";
 // import { useUsers } from "../services/userService";
 import Cookies from "universal-cookie";
 import { useRouter } from "next/router";
@@ -74,8 +74,12 @@ const Layout = (props) => {
   const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const cookies = new Cookies();
-  const { data: mrUser, status, refetch } = useGetUser(cookies.get("userId"));
-  if (status !== "success" && mrUser === undefined) {
+  const {
+    data: mrUser,
+    status,
+    refetch,
+  } = useCurrentUser(cookies.get("userId"));
+  if (status !== "success" && mrUser) {
     return (
       <CircularProgress
         style={{ position: "relative", left: "50%", top: "50%" }}
@@ -85,7 +89,7 @@ const Layout = (props) => {
     <Typography variant="h1">ERROR WITH DATA FETCHING</Typography>;
   }
   if (cookies.get("token") === undefined) {
-    location.push("/");
+    typeof window !== "undefined" && location.push("/");
   }
 
   // const { data: users, status, refetch } = useUsers();

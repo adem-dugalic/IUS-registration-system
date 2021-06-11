@@ -11,6 +11,7 @@ const useStyles = makeStyles(() =>
       top: "5%",
       marginLeft: "3%",
       marginRight: "3%",
+      height: "100vh",
     },
   })
 );
@@ -20,7 +21,9 @@ const index = () => {
   return (
     <Layout mobile={true}>
       <div className={classes.root}>
-        <Schedule />
+        <div style={{ height: "80%", position: "relative", overflowY: "auto" }}>
+          <Schedule />
+        </div>
       </div>
     </Layout>
   );

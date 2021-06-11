@@ -52,30 +52,6 @@ const index = () => {
             <Profile currentUser={mrUser} />
           </Grid>
           <Grid item xs={12} className={classes.choosenCourses}>
-            {/* <Table className={classes.table} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Course ID</TableCell>
-                  <TableCell align="right">Course name</TableCell>
-                  <TableCell align="right">Professor</TableCell>
-                  <TableCell align="right">Pre-requisites</TableCell>
-                  <TableCell align="right">ECTS</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <TableRow key={row.name}>
-                    <TableCell component="th" scope="row">
-                      {row.name}
-                    </TableCell>
-                    <TableCell align="right">{row.calories}</TableCell>
-                    <TableCell align="right">{row.fat}</TableCell>
-                    <TableCell align="right">{row.carbs}</TableCell>
-                    <TableCell align="right">{row.protein}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table> */}
             <TakenCourses />
           </Grid>
         </Grid>

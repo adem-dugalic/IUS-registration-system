@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useState } from "react";
+import ClassesMain from "../../../components/ClassesMain";
 import Layout from "../../../Components/Layout";
 import Welcome from "../../../Components/Welcome";
 
@@ -10,12 +11,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Home = (props) => {
+const Classes = (props) => {
   const classes = useStyles();
   return (
     <Layout>
-      <Welcome panel={"Professor"} />
+      <ClassesMain />
     </Layout>
   );
 };
-export default Home;
+export default Classes;

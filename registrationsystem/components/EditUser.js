@@ -1,6 +1,7 @@
 import {
   Button,
   Checkbox,
+  CircularProgress,
   createStyles,
   CssBaseline,
   FormControl,
@@ -23,9 +24,10 @@ import CardBody from "./Card/CardBody";
 import CardHeader from "./Card/CardHeader";
 import Card from "./Card/Card.js";
 import { useForm } from "react-hook-form";
-import { useCreateUser } from "../services/userService";
+import { useCreateUser, useGetUser } from "../services/userService";
 import { useMutation } from "react-query";
 import { httpClient } from "../utilities/httpClient";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -41,15 +43,26 @@ const useStyles = makeStyles(() =>
   })
 );
 
-function UserPanel(props) {
+function EditUser(props) {
   const classes = useStyles();
+  const router = useRouter();
+  console.log(router.query);
   const [faculty, setFaculty] = useState("");
   const [program, setProgram] = useState("");
   const { register, handleSubmit } = useForm();
   // const [mutate, { data, error }] = useCreateUser();
+  const { data: editedUser, status, refetch } = useGetUser(router.query.id);
   const mutation = useMutation((userData) =>
-    httpClient.post("/users", userData)
+    httpClient.put(`/users/${router.query.id}`, userData)
   );
+
+  if (status !== "success" && editedUser === undefined) {
+    return (
+      <CircularProgress
+        style={{ position: "relative", left: "50%", top: "50%" }}
+      />
+    );
+  }
 
   function renderedSwitch() {
     if (faculty === "FENS") {
@@ -94,16 +107,19 @@ function UserPanel(props) {
       surname: data.lastName,
       email: data.email,
       userID: data.id,
-      // password: data.password,
+      //password: data.password,
       faculty: faculty,
       program: program,
       isAdmin: data.admin,
       isSAO: data.sao,
       paid: data.paid,
+      isApproved: false,
     };
     console.log(someone);
     // await mutate(someone);
     mutation.mutate(someone);
+
+    router.push("/admin/users");
   };
 
   return (
@@ -111,7 +127,7 @@ function UserPanel(props) {
       <CssBaseline />
       <CardHeader color="info">
         <Typography variant="h5" align="center" gutterBottom>
-          Add a new user
+          Edit {editedUser.data.name}
         </Typography>
       </CardHeader>
       <CardBody>
@@ -127,6 +143,7 @@ function UserPanel(props) {
                 fullWidth
                 required
                 name="firstName"
+                defaultValue={editedUser.data.name}
                 type="text"
                 label="First Name"
                 inputRef={register}
@@ -136,6 +153,7 @@ function UserPanel(props) {
               <TextField
                 fullWidth
                 required
+                defaultValue={editedUser.data.surname}
                 name="lastName"
                 type="text"
                 label="Last Name"
@@ -145,6 +163,7 @@ function UserPanel(props) {
             <Grid item xs={6}>
               <TextField
                 name="email"
+                defaultValue={editedUser.data.email}
                 fullWidth
                 required
                 type="email"
@@ -155,6 +174,7 @@ function UserPanel(props) {
             <Grid item xs={6}>
               <TextField
                 name="id"
+                defaultValue={editedUser.data.userID}
                 fullWidth
                 required
                 type="ID"
@@ -239,4 +259,4 @@ function UserPanel(props) {
     </Card>
   );
 }
-export default UserPanel;
+export default EditUser;

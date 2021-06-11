@@ -10,22 +10,21 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
-import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import Checkbox from "@material-ui/core/Checkbox";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
-import DeleteIcon from "@material-ui/icons/Delete";
-import FilterListIcon from "@material-ui/icons/FilterList";
 import { useCourses } from "../services/courseService";
+import EditIcon from "@material-ui/icons/Edit";
+import Link from "next/link";
 import {
   infoColor,
   blackColor,
   hexToRgb,
 } from "../assents/jss/material-dashboard-react";
+import { useMutation } from "react-query";
+import { IconButton, Snackbar } from "@material-ui/core";
+import Delete from "@material-ui/icons/Delete";
+import { httpClient } from "../utilities/httpClient";
 
 const CustomTableHeadRow = withStyles((theme) => ({
   head: {
@@ -106,6 +105,18 @@ const headCells = [
     numeric: true,
     disablePadding: false,
     label: "Pre-requisites",
+  },
+  {
+    id: "delete",
+    numeric: true,
+    disablePadding: false,
+    label: "Delete",
+  },
+  {
+    id: "edit",
+    numeric: true,
+    disablePadding: false,
+    label: "Edit",
   },
 ];
 
@@ -219,10 +230,16 @@ export default function EnhancedTable() {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
+  const [removed, setRemoved] = React.useState(false);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const { data: courses, status, refetch } = useCourses();
+  const mutation = useMutation((id) => httpClient.delete(`/courses/${id}`), {
+    onSuccess: () => {
+      refetch();
+    },
+  });
   console.log(courses);
   if (courses === undefined) {
     return null;
@@ -277,12 +294,31 @@ export default function EnhancedTable() {
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setRemoved(false);
+  };
+
   const emptyRows =
     rowsPerPage -
     Math.min(rowsPerPage, courses.data.length - page * rowsPerPage);
   if (courses !== undefined) {
     return (
-      <div className={classes.root}>
+      <div
+        className={classes.root}
+        style={{ marginBottom: "10%", position: "relative", maxHeight: 600 }}
+      >
+        <Snackbar
+          message={"SUCCESS - Course deleted"}
+          closes
+          open={removed}
+          color="primary"
+          onClose={handleClose}
+          onClick={handleClose}
+        />
         <Paper className={classes.paper}>
           {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
           <TableContainer>
@@ -305,18 +341,18 @@ export default function EnhancedTable() {
                 {stableSort(courses.data, getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
-                    const isItemSelected = isSelected(row.name);
+                    const isItemSelected = isSelected(row.course_id);
                     const labelId = `enhanced-table-checkbox-${index}`;
 
                     return (
                       <TableRow
                         hover
-                        onClick={(event) => handleClick(event, row.name)}
+                        onClick={(event) => handleClick(event, row.course_id)}
                         role="checkbox"
                         s
                         aria-checked={isItemSelected}
                         tabIndex={-1}
-                        key={row.name}
+                        key={row.course_id}
                         selected={isItemSelected}
                       >
                         <TableCell padding="checkbox">
@@ -336,7 +372,29 @@ export default function EnhancedTable() {
                         <TableCell align="right">{row.course_name}</TableCell>
                         <TableCell align="right">{row.Lecturer}</TableCell>
                         <TableCell align="right">{row.AcademicUnit}</TableCell>
-                        <TableCell align="right">{row.Url}</TableCell>
+                        <TableCell align="right">{row.prerequisite}</TableCell>
+                        <TableCell align="right">
+                          <IconButton
+                            onClick={() => {
+                              mutation.mutate(row._id);
+                              setRemoved(true);
+                            }}
+                          >
+                            <Delete />
+                          </IconButton>
+                        </TableCell>
+                        <TableCell>
+                          <Link
+                            href={{
+                              pathname: "/admin/editCourse/[id]",
+                              query: { id: row._id },
+                            }}
+                          >
+                            <IconButton>
+                              <EditIcon />
+                            </IconButton>
+                          </Link>
+                        </TableCell>
                       </TableRow>
                     );
                   })}

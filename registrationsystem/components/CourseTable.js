@@ -15,11 +15,15 @@ import Paper from "@material-ui/core/Paper";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { Checkbox } from "@material-ui/core";
+import { useCourses } from "../services/courseService";
 import {
   infoColor,
   blackColor,
   hexToRgb,
 } from "../assents/jss/material-dashboard-react";
+import { AddCircle } from "@material-ui/icons";
+import { useMutation } from "react-query";
+import { httpClient } from "../utilities/httpClient";
 
 const useRowStyles = makeStyles({
   root: {
@@ -67,7 +71,11 @@ function createData(name, calories, fat, carbs, protein, price) {
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
+  console.log(props.courses);
   const classes = useRowStyles();
+  const mutation = useMutation((id) => httpClient.post(`/userCourse/${id}`), {
+    onSuccess: () => {},
+  });
 
   return (
     <React.Fragment>
@@ -107,33 +115,51 @@ function Row(props) {
                         inputProps={{ "aria-label": "select all desserts" }}
                       />
                     </TableCell>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Total price ($)</TableCell>
+                    <TableCell>Course ID</TableCell>
+                    <TableCell>Course Name</TableCell>
+                    <TableCell align="right">Lecturer</TableCell>
+                    <TableCell align="right">Prerequisites</TableCell>
+                    <TableCell align="right">Add</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          // indeterminate={numSelected > 0 && numSelected < rowCount}
-                          // checked={rowCount > 0 && numSelected === rowCount}
-                          // onChange={onSelectAllClick}
-                          inputProps={{ "aria-label": "select all desserts" }}
-                        />
-                      </TableCell>
-                      <TableCell component="th" scope="row">
-                        {historyRow.date}
-                      </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  {props.courses &&
+                    props.courses.data.map(
+                      (historyRow, index) =>
+                        !(index > 5) && (
+                          <TableRow key={historyRow.date}>
+                            <TableCell padding="checkbox">
+                              {/* <Checkbox
+                                // indeterminate={numSelected > 0 && numSelected < rowCount}
+                                // checked={rowCount > 0 && numSelected === rowCount}
+                                // onChange={onSelectAllClick}
+                                inputProps={{
+                                  "aria-label": "select all desserts",
+                                }}
+                              /> */}
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                              {historyRow.course_id}
+                            </TableCell>
+                            <TableCell>{historyRow.course_name}</TableCell>
+                            <TableCell align="right">
+                              {historyRow.Lecturer}
+                            </TableCell>
+                            <TableCell align="right">
+                              {historyRow.prerequisite}
+                            </TableCell>
+                            <TableCell align="right">
+                              <IconButton
+                                onClick={() => {
+                                  mutation.mutate(historyRow._id);
+                                }}
+                              >
+                                <AddCircle />
+                              </IconButton>
+                            </TableCell>
+                          </TableRow>
+                        )
+                    )}
                 </TableBody>
               </Table>
             </Box>
@@ -170,6 +196,7 @@ const rows = [
 ];
 
 export default function CollapsibleTable() {
+  const { data: courses, status, refetch } = useCourses();
   return (
     <TableContainer
       component={Paper}
@@ -191,7 +218,7 @@ export default function CollapsibleTable() {
         </TableHead>
         <TableBody style={{ backgroundColor: "#fff" }}>
           {rows.map((row) => (
-            <Row key={row.name} row={row} />
+            <Row key={row.name} row={row} courses={courses} />
           ))}
         </TableBody>
       </Table>

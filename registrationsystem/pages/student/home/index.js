@@ -22,7 +22,7 @@ const Home = (props) => {
   return (
     <Layout mobile={false}>
       <div className={classes.root}>
-        <Welcome />
+        <Welcome panel={"Student"} />
         <div className={classes.notification}>
           <Notifications />
         </div>

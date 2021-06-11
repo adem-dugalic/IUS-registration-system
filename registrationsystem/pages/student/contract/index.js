@@ -1,14 +1,30 @@
-import { createStyles, Grid, makeStyles, Typography } from "@material-ui/core";
+import {
+  Button,
+  createStyles,
+  Grid,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 import React, { useEffect } from "react";
 import Layout from "../../../Components/Layout";
 import ContractForm from "../../../Components/ContractForm";
 // import ContractPDF from "../../../Components/ContractPDF";
 import dynamic from "next/dynamic";
+import CardBody from "../../../Components/Card/CardBody";
+import CardFooter from "../../../Components/Card/CardFooter";
+import CardHeader from "../../../Components/Card/CardHeader";
+import CardIcon from "../../../Components/Card/CardIcon";
+import Card from "../../../Components/Card/Card.js";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      height: "100%",
+      height: "60%",
+      width: "80%",
+      top: "15%",
+      position: "relative",
+      left: "50%",
+      transform: "translate(-50%)",
     },
     white: {
       background: "#fff",
@@ -16,7 +32,6 @@ const useStyles = makeStyles((theme) =>
     },
     form: {
       background: "#292626",
-      margin: "auto",
       paddingTop: 8,
       borderRadius: 5,
       boxShadow: "-1px 2px 5px 2px rgba(0,0,0,0.44)",
@@ -59,47 +74,54 @@ const Home = (props) => {
   const classes = useStyles();
   return (
     <Layout mobile={false}>
-      <Grid container className={classes.root}>
-        <Grid item lg={5} className={classes.form}>
-          {/* <div className={classes.topping}></div> */}
+      <Card className={classes.root}>
+        {/* <div className={classes.form}> */}
+        {/* <div className={classes.topping}></div> */}
+        <CardHeader color="success">
           <Typography className={classes.heading}>Fill in the form</Typography>
-          <div className={classes.innerForm}>
-            <ContractForm />
-            <Typography>
-              <Typography className={classes.title}>
-                Download the contract, sign your contract and mail it to
-                finance@ius.edu.ba with your payment receipt.
-              </Typography>
-              <Grid container className={classes.demo}>
-                <Typography type="body2" className={classes.text}>
-                  1. If you select "in advance payment (cash)" option, you just
-                  need to follow cash payment instructions and pay your tuition
-                  fees to IUS account. After you deposit the money, please send
-                  the payment slip to IUS Finance Office (finance@ius.edu.ba).
-                </Typography>
-                <Typography type="body2" className={classes.text}>
-                  2. If you select "credit card" option, you need to follow it
-                  up with MAIL ORDER form that needs to be sent to
-                  finance@ius.edu.ba.
-                </Typography>
-                <Typography type="body2" className={classes.text}>
-                  3. If you select "bank loan" option, please contact IUS
-                  Finance Office via finance@ius.edu.ba to receive bank loan
-                  form NOTE: For any other changes please contact finance office
-                  via email. IMPORTANT: To avoid financial penalties, course
-                  registration and student status problems, please make sure to
-                  complete renewals and payments by the deadline given. If you
-                  do not plan to continue upcoming academic year, you should
-                  contact Student Affairs Office.
-                </Typography>
-              </Grid>
+        </CardHeader>
+
+        <div className={classes.innerForm}>
+          <ContractForm />
+          <Typography>
+            <Typography className={classes.title}>
+              Download the contract, sign your contract and mail it to
+              finance@ius.edu.ba with your payment receipt.
             </Typography>
-          </div>
-        </Grid>
-        <Grid item lg={6} className={classes.white}>
-          <PDFViewer />
-        </Grid>
-      </Grid>
+            <div container className={classes.demo}>
+              <Typography type="body2" className={classes.text}>
+                1. If you select "in advance payment (cash)" option, you just
+                need to follow cash payment instructions and pay your tuition
+                fees to IUS account. After you deposit the money, please send
+                the payment slip to IUS Finance Office (finance@ius.edu.ba).
+              </Typography>
+              <Typography type="body2" className={classes.text}>
+                2. If you select "credit card" option, you need to follow it up
+                with MAIL ORDER form that needs to be sent to
+                finance@ius.edu.ba.
+              </Typography>
+              <Typography type="body2" className={classes.text}>
+                3. If you select "bank loan" option, please contact IUS Finance
+                Office via finance@ius.edu.ba to receive bank loan form NOTE:
+                For any other changes please contact finance office via email.
+                IMPORTANT: To avoid financial penalties, course registration and
+                student status problems, please make sure to complete renewals
+                and payments by the deadline given. If you do not plan to
+                continue upcoming academic year, you should contact Student
+                Affairs Office.
+              </Typography>
+            </div>
+          </Typography>
+        </div>
+        <Button
+          style={{ width: "30%", marginLeft: "33%", marginBottom: 15 }}
+          variant="contained"
+          color="primary"
+        >
+          Renew
+        </Button>
+        {/* </div> */}
+      </Card>
     </Layout>
   );
 };
