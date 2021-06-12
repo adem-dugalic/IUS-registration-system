@@ -2,6 +2,8 @@
  Full registration system for International University of Sarajevo built using Next.js
 
 
+#Preffered manager yarn
+
 To start first run 
 
 ```
@@ -15,8 +17,15 @@ npm install
 to install all the packages.
 
 
-After the installation 
-    run "yarn dev" or "npm dev"
+After the installation run 
+```
+yarn dev
+```
+or 
+```
+npm dev
+```
+
 
 ## Made by 
 - Adem Dugalić
