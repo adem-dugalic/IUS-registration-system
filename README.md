@@ -12,4 +12,4 @@ After the installation
 
 ## Made by 
 - Adem Dugalić
-- Tarik Muharem
+- Tarik Muharem [@Tarik](https://github.com/tarikmuharem)
