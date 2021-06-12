@@ -1,367 +1,395 @@
 import * as React from "react";
 import Paper from "@material-ui/core/Paper";
-import { ViewState } from "@devexpress/dx-react-scheduler";
+import TableCell from "@material-ui/core/TableCell";
+import {
+  darken,
+  fade,
+  lighten,
+} from "@material-ui/core/styles/colorManipulator";
+import Typography from "@material-ui/core/Typography";
+import { ViewState, EditingState } from "@devexpress/dx-react-scheduler";
+import classNames from "clsx";
 import {
   Scheduler,
-  WeekView,
+  MonthView,
   Appointments,
+  Toolbar,
+  DateNavigator,
+  AppointmentTooltip,
+  AppointmentForm,
+  EditRecurrenceMenu,
+  Resources,
+  DragDropProvider,
 } from "@devexpress/dx-react-scheduler-material-ui";
-import { makeStyles } from "@material-ui/core/styles";
-import { fade } from "@material-ui/core/styles/colorManipulator";
+import WbSunny from "@material-ui/icons/WbSunny";
+import FilterDrama from "@material-ui/icons/FilterDrama";
+import Opacity from "@material-ui/icons/Opacity";
+import ColorLens from "@material-ui/icons/ColorLens";
+import { withStyles } from "@material-ui/core/styles";
+import { owners } from "./demo-data/tasks";
 
 const appointments = [
   {
-    title: "Website Re-Design Plan",
-    startDate: new Date(2018, 5, 25, 9, 35),
-    endDate: new Date(2018, 5, 25, 11, 30),
     id: 0,
-    location: "Room 1",
+    title: "Watercolor Landscape",
+    startDate: new Date(2018, 6, 23, 9, 30),
+    endDate: new Date(2018, 6, 23, 11, 30),
+    ownerId: 1,
   },
   {
-    title: "Book Flights to San Fran for Sales Trip",
-    startDate: new Date(2018, 5, 25, 12, 11),
-    endDate: new Date(2018, 5, 25, 13, 0),
     id: 1,
-    location: "Room 1",
+    title: "Monthly Planning",
+    startDate: new Date(2018, 5, 28, 9, 30),
+    endDate: new Date(2018, 5, 28, 11, 30),
+    ownerId: 1,
   },
   {
-    title: "Install New Router in Dev Room",
-    startDate: new Date(2018, 5, 25, 14, 30),
-    endDate: new Date(2018, 5, 25, 15, 35),
     id: 2,
-    location: "Room 2",
+    title: "Recruiting students",
+    startDate: new Date(2018, 6, 9, 12, 0),
+    endDate: new Date(2018, 6, 9, 13, 0),
+    ownerId: 2,
   },
   {
-    title: "Approve Personal Computer Upgrade Plan",
-    startDate: new Date(2018, 5, 26, 10, 0),
-    endDate: new Date(2018, 5, 26, 11, 0),
     id: 3,
-    location: "Room 2",
+    title: "Oil Painting",
+    startDate: new Date(2018, 6, 18, 14, 30),
+    endDate: new Date(2018, 6, 18, 15, 30),
+    ownerId: 2,
   },
   {
-    title: "Final Budget Review",
-    startDate: new Date(2018, 5, 26, 12, 0),
-    endDate: new Date(2018, 5, 26, 13, 35),
     id: 4,
-    location: "Room 2",
+    title: "Open Day",
+    startDate: new Date(2018, 6, 20, 12, 0),
+    endDate: new Date(2018, 6, 20, 13, 35),
+    ownerId: 6,
   },
   {
-    title: "New Brochures",
-    startDate: new Date(2018, 5, 26, 14, 30),
-    endDate: new Date(2018, 5, 26, 15, 45),
     id: 5,
-    location: "Room 2",
+    title: "Watercolor Landscape",
+    startDate: new Date(2018, 6, 6, 13, 0),
+    endDate: new Date(2018, 6, 6, 14, 0),
+    rRule: "FREQ=WEEKLY;BYDAY=FR;UNTIL=20180816",
+    exDate: "20180713T100000Z,20180727T100000Z",
+    ownerId: 2,
   },
   {
-    title: "Install New Database",
-    startDate: new Date(2018, 5, 27, 9, 45),
-    endDate: new Date(2018, 5, 27, 11, 15),
     id: 6,
-    location: "Room 1",
+    title: "Meeting of Instructors",
+    startDate: new Date(2018, 5, 28, 12, 0),
+    endDate: new Date(2018, 5, 28, 12, 30),
+    rRule: "FREQ=WEEKLY;BYDAY=TH;UNTIL=20180727",
+    exDate: "20180705T090000Z,20180719T090000Z",
+    ownerId: 5,
   },
   {
-    title: "Approve New Online Marketing Strategy",
-    startDate: new Date(2018, 5, 27, 12, 0),
-    endDate: new Date(2018, 5, 27, 14, 0),
     id: 7,
-    location: "Room 3",
+    title: "Oil Painting for Beginners",
+    startDate: new Date(2018, 6, 3, 11, 0),
+    endDate: new Date(2018, 6, 3, 12, 0),
+    rRule: "FREQ=WEEKLY;BYDAY=TU;UNTIL=20180801",
+    exDate: "20180710T080000Z,20180724T080000Z",
+    ownerId: 3,
   },
   {
-    title: "Upgrade Personal Computers",
-    startDate: new Date(2018, 5, 27, 15, 15),
-    endDate: new Date(2018, 5, 27, 16, 30),
     id: 8,
-    location: "Room 3",
-  },
-  {
-    title: "Customer Workshop",
-    startDate: new Date(2018, 5, 28, 11, 0),
-    endDate: new Date(2018, 5, 28, 12, 0),
-    id: 9,
-    location: "Room 3",
-  },
-  {
-    title: "Prepare 2015 Marketing Plan",
-    startDate: new Date(2018, 5, 28, 11, 0),
-    endDate: new Date(2018, 5, 28, 13, 30),
-    id: 10,
-    location: "Room 1",
-  },
-  {
-    title: "Brochure Design Review",
-    startDate: new Date(2018, 5, 28, 14, 0),
-    endDate: new Date(2018, 5, 28, 15, 30),
-    id: 11,
-    location: "Room 2",
-  },
-  {
-    title: "Create Icons for Website",
-    startDate: new Date(2018, 5, 29, 10, 0),
-    endDate: new Date(2018, 5, 29, 11, 30),
-    id: 12,
-    location: "Room 2",
-  },
-  {
-    title: "Upgrade Server Hardware",
-    startDate: new Date(2018, 5, 29, 14, 30),
-    endDate: new Date(2018, 5, 29, 16, 0),
-    id: 13,
-    location: "Room 3",
-  },
-  {
-    title: "Submit New Website Design",
-    startDate: new Date(2018, 5, 29, 16, 30),
-    endDate: new Date(2018, 5, 29, 18, 0),
-    id: 14,
-    location: "Room 3",
-  },
-  {
-    title: "Launch New Website",
-    startDate: new Date(2018, 5, 29, 12, 20),
-    endDate: new Date(2018, 5, 29, 14, 0),
-    id: 15,
-    location: "Room 2",
-  },
-  {
-    title: "Website Re-Design Plan",
-    startDate: new Date(2018, 6, 2, 9, 30),
-    endDate: new Date(2018, 6, 2, 15, 30),
-    id: 16,
-    location: "Room 1",
-  },
-  {
-    title: "Book Flights to San Fran for Sales Trip",
-    startDate: new Date(2018, 6, 2, 12, 0),
-    endDate: new Date(2018, 6, 2, 13, 0),
-    id: 17,
-    location: "Room 3",
-  },
-  {
-    title: "Install New Router in Dev Room",
-    startDate: new Date(2018, 6, 2, 14, 30),
-    endDate: new Date(2018, 6, 2, 17, 30),
-    id: 18,
-    location: "Room 2",
-  },
-  {
-    title: "Approve Personal Computer Upgrade Plan",
-    startDate: new Date(2018, 6, 2, 16, 0),
-    endDate: new Date(2018, 6, 3, 9, 0),
-    id: 19,
-    location: "Room 2",
-  },
-  {
-    title: "Final Budget Review",
-    startDate: new Date(2018, 6, 3, 10, 15),
-    endDate: new Date(2018, 6, 3, 13, 35),
-    id: 20,
-    location: "Room 1",
-  },
-  {
-    title: "New Brochures",
-    startDate: new Date(2018, 6, 3, 14, 30),
-    endDate: new Date(2018, 6, 3, 15, 45),
-    id: 21,
-    location: "Room 3",
-  },
-  {
-    title: "Install New Database",
-    startDate: new Date(2018, 6, 3, 15, 45),
-    endDate: new Date(2018, 6, 4, 12, 15),
-    id: 22,
-    location: "Room 3",
-  },
-  {
-    title: "Approve New Online Marketing Strategy",
-    startDate: new Date(2018, 6, 4, 12, 35),
-    endDate: new Date(2018, 6, 4, 14, 15),
-    id: 23,
-    location: "Room 3",
-  },
-  {
-    title: "Upgrade Personal Computers",
-    startDate: new Date(2018, 6, 4, 15, 15),
-    endDate: new Date(2018, 6, 4, 20, 30),
-    id: 24,
-    location: "Room 2",
-  },
-  {
-    title: "Customer Workshop",
-    startDate: new Date(2018, 6, 5, 6, 0),
-    endDate: new Date(2018, 6, 5, 14, 20),
-    id: 25,
-    location: "Room 1",
-  },
-  {
-    title: "Customer Workshop",
-    startDate: new Date(2018, 6, 5, 14, 35),
-    endDate: new Date(2018, 6, 5, 16, 20),
-    id: 26,
-    location: "Room 1",
-  },
-  {
-    title: "Customer Workshop 2",
-    startDate: new Date(2018, 6, 5, 10, 0),
-    endDate: new Date(2018, 6, 5, 11, 20),
-    id: 27,
-    location: "Room 2",
-  },
-  {
-    title: "Prepare 2015 Marketing Plan",
-    startDate: new Date(2018, 6, 5, 20, 0),
-    endDate: new Date(2018, 6, 6, 13, 30),
-    id: 28,
-    location: "Room 3",
-  },
-  {
-    title: "Brochure Design Review",
-    startDate: new Date(2018, 6, 6, 14, 10),
-    endDate: new Date(2018, 6, 6, 15, 30),
-    id: 29,
-    location: "Room 3",
-  },
-  {
-    title: "Create Icons for Website",
-    startDate: new Date(2018, 6, 6, 10, 0),
-    endDate: new Date(2018, 6, 7, 14, 30),
-    id: 30,
-    location: "Room 1",
-  },
-  {
-    title: "Upgrade Server Hardware",
-    startDate: new Date(2018, 6, 3, 9, 30),
-    endDate: new Date(2018, 6, 3, 12, 25),
-    id: 31,
-    location: "Room 2",
-  },
-  {
-    title: "Submit New Website Design",
-    startDate: new Date(2018, 6, 3, 12, 30),
-    endDate: new Date(2018, 6, 3, 18, 0),
-    id: 32,
-    location: "Room 2",
-  },
-  {
-    title: "Launch New Website",
-    startDate: new Date(2018, 6, 3, 12, 20),
-    endDate: new Date(2018, 6, 3, 14, 10),
-    id: 33,
-    location: "Room 2",
-  },
-  {
-    title: "Book Flights to San Fran for Sales Trip",
-    startDate: new Date(2018, 5, 26, 0, 0),
-    endDate: new Date(2018, 5, 27, 0, 0),
-    id: 34,
-    location: "Room 1",
-  },
-  {
-    title: "Customer Workshop",
-    startDate: new Date(2018, 5, 29, 10, 0),
-    endDate: new Date(2018, 5, 30, 14, 30),
-    id: 35,
-    location: "Room 1",
-  },
-  {
-    title: "Google AdWords Strategy",
-    startDate: new Date(2018, 6, 3, 0, 0),
-    endDate: new Date(2018, 6, 4, 10, 30),
-    id: 36,
-    location: "Room 3",
-  },
-  {
-    title: "Rollout of New Website and Marketing Brochures",
-    startDate: new Date(2018, 6, 5, 10, 0),
-    endDate: new Date(2018, 6, 9, 14, 30),
-    id: 37,
-    location: "Room 3",
-  },
-  {
-    title: "Update NDA Agreement",
-    startDate: new Date(2018, 6, 1, 10, 0),
-    endDate: new Date(2018, 6, 3, 14, 30),
-    id: 38,
-    location: "Room 2",
-  },
-  {
-    title: "Customer Workshop",
-    startDate: new Date(2018, 6, 1),
-    endDate: new Date(2018, 6, 2),
-    allDay: true,
-    id: 39,
-    location: "Room 1",
+    title: "Watercolor Workshop",
+    startDate: new Date(2018, 6, 9, 11, 0),
+    endDate: new Date(2018, 6, 9, 12, 0),
+    ownerId: 3,
   },
 ];
 
-const useStyles = makeStyles((theme) => ({
-  todayCell: {
-    backgroundColor: fade(theme.palette.primary.main, 0.1),
+const resources = [
+  {
+    fieldName: "ownerId",
+    title: "Owners",
+    instances: owners,
+  },
+];
+
+const getBorder = (theme) =>
+  `1px solid ${
+    theme.palette.type === "light"
+      ? lighten(fade(theme.palette.divider, 1), 0.88)
+      : darken(fade(theme.palette.divider, 1), 0.68)
+  }`;
+
+const DayScaleCell = (props) => (
+  <MonthView.DayScaleCell
+    {...props}
+    style={{ textAlign: "center", fontWeight: "bold" }}
+  />
+);
+const CustomPaper = withStyles((theme) => ({
+  root: {
+    position: "relative",
+  },
+}))(Paper);
+
+const styles = (theme) => ({
+  cell: {
+    color: "#78909C!important",
+    position: "relative",
+    userSelect: "none",
+    verticalAlign: "top",
+    padding: 0,
+    height: 100,
+    borderLeft: getBorder(theme),
+    "&:first-child": {
+      borderLeft: "none",
+    },
+    "&:last-child": {
+      paddingRight: 0,
+    },
+    "tr:last-child &": {
+      borderBottom: "none",
+    },
     "&:hover": {
-      backgroundColor: fade(theme.palette.primary.main, 0.14),
+      backgroundColor: "white",
     },
     "&:focus": {
-      backgroundColor: fade(theme.palette.primary.main, 0.16),
+      backgroundColor: fade(theme.palette.primary.main, 0.15),
+      outline: 0,
     },
   },
-  weekendCell: {
-    backgroundColor: fade(theme.palette.action.disabledBackground, 0.04),
+  content: {
+    display: "flex",
+    justifyContent: "center",
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    alignItems: "center",
+  },
+  text: {
+    padding: "0.5em",
+    textAlign: "center",
+  },
+  sun: {
+    color: "#FFEE58",
+  },
+  cloud: {
+    color: "#90A4AE",
+  },
+  rain: {
+    color: "#4FC3F7",
+  },
+  sunBack: {
+    backgroundColor: "#FFFDE7",
+  },
+  cloudBack: {
+    backgroundColor: "#ECEFF1",
+  },
+  rainBack: {
+    backgroundColor: "#E1F5FE",
+  },
+  opacity: {
+    opacity: "0.5",
+  },
+  appointment: {
+    borderRadius: "10px",
     "&:hover": {
-      backgroundColor: fade(theme.palette.action.disabledBackground, 0.04),
-    },
-    "&:focus": {
-      backgroundColor: fade(theme.palette.action.disabledBackground, 0.04),
+      opacity: 0.6,
     },
   },
-  today: {
-    backgroundColor: fade(theme.palette.primary.main, 0.16),
+  apptContent: {
+    "&>div>div": {
+      whiteSpace: "normal !important",
+      lineHeight: 1.2,
+    },
   },
-  weekend: {
-    backgroundColor: fade(theme.palette.action.disabledBackground, 0.06),
+  flexibleSpace: {
+    flex: "none",
   },
-}));
+  flexContainer: {
+    display: "flex",
+    alignItems: "center",
+  },
+  tooltipContent: {
+    padding: theme.spacing(3, 1),
+    paddingTop: 0,
+    backgroundColor: theme.palette.background.paper,
+    boxSizing: "border-box",
+    width: "400px",
+  },
+  tooltipText: {
+    ...theme.typography.body2,
+    display: "inline-block",
+  },
+  title: {
+    ...theme.typography.h6,
+    color: theme.palette.text.secondary,
+    fontWeight: theme.typography.fontWeightBold,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+  icon: {
+    color: theme.palette.action.active,
+    verticalAlign: "middle",
+  },
+  circle: {
+    width: theme.spacing(4.5),
+    height: theme.spacing(4.5),
+    verticalAlign: "super",
+  },
+  textCenter: {
+    textAlign: "center",
+  },
+  dateAndTitle: {
+    lineHeight: 1.1,
+  },
+  titleContainer: {
+    paddingBottom: theme.spacing(2),
+  },
+  container: {
+    paddingBottom: theme.spacing(1.5),
+  },
+});
 
-const TimeTableCell = (props) => {
-  const classes = useStyles();
-  const { startDate } = props;
-  const date = new Date(startDate);
-
-  if (date.getDate() === new Date().getDate()) {
-    return <WeekView.TimeTableCell {...props} className={classes.todayCell} />;
+const WeatherIcon = ({ classes, id }) => {
+  switch (id) {
+    case 0:
+      return <Opacity className={classes.rain} fontSize="large" />;
+    case 1:
+      return <WbSunny className={classes.sun} fontSize="large" />;
+    case 2:
+      return <FilterDrama className={classes.cloud} fontSize="large" />;
+    default:
+      return null;
   }
-  if (date.getDay() === 0 || date.getDay() === 6) {
+};
+
+// #FOLD_BLOCK
+const CellBase = React.memo(
+  ({
+    classes,
+    startDate,
+    formatDate,
+    otherMonth,
+    // #FOLD_BLOCK
+  }) => {
+    const iconId = Math.abs(Math.floor(Math.sin(startDate.getDate()) * 10) % 3);
+    const isFirstMonthDay = startDate.getDate() === 1;
+    const formatOptions = isFirstMonthDay
+      ? { day: "numeric", month: "long" }
+      : { day: "numeric" };
     return (
-      <WeekView.TimeTableCell {...props} className={classes.weekendCell} />
+      <TableCell
+        tabIndex={0}
+        className={classNames({
+          [classes.cell]: true,
+          [classes.rainBack]: iconId === 0,
+          [classes.sunBack]: iconId === 1,
+          [classes.cloudBack]: iconId === 2,
+          [classes.opacity]: otherMonth,
+        })}
+      >
+        <div className={classes.content}>
+          <WeatherIcon classes={classes} id={iconId} />
+        </div>
+        <div className={classes.text}>
+          {formatDate(startDate, formatOptions)}
+        </div>
+      </TableCell>
     );
   }
-  return <WeekView.TimeTableCell {...props} />;
-};
-
-const DayScaleCell = (props) => {
-  const classes = useStyles();
-  const { startDate, today } = props;
-
-  if (today) {
-    return <WeekView.DayScaleCell {...props} className={classes.today} />;
-  }
-  if (startDate.getDay() === 0 || startDate.getDay() === 6) {
-    return <WeekView.DayScaleCell {...props} className={classes.weekend} />;
-  }
-  return <WeekView.DayScaleCell {...props} />;
-};
-
-const Schedule = () => (
-  <Paper>
-    <Scheduler data={appointments} height={"500"}>
-      <ViewState />
-      <WeekView
-        startDayHour={9}
-        endDayHour={18}
-        timeTableCellComponent={TimeTableCell}
-        dayScaleCellComponent={DayScaleCell}
-      />
-      <Appointments />
-    </Scheduler>
-  </Paper>
 );
 
-export default Schedule;
+const TimeTableCell = withStyles(styles, { name: "Cell" })(CellBase);
+
+const Appointment = withStyles(styles, { name: "Appointment" })(
+  ({ classes, ...restProps }) => (
+    <Appointments.Appointment {...restProps} className={classes.appointment} />
+  )
+);
+
+const AppointmentContent = withStyles(styles, { name: "AppointmentContent" })(
+  ({ classes, ...restProps }) => (
+    <Appointments.AppointmentContent
+      {...restProps}
+      className={classes.apptContent}
+    />
+  )
+);
+
+const FlexibleSpace = withStyles(styles, { name: "ToolbarRoot" })(
+  ({ classes, ...restProps }) => (
+    <Toolbar.FlexibleSpace {...restProps} className={classes.flexibleSpace}>
+      <div className={classes.flexContainer}>
+        <ColorLens fontSize="large" htmlColor="#FF7043" />
+        <Typography variant="h5" style={{ marginLeft: "10px" }}>
+          IUS
+        </Typography>
+      </div>
+    </Toolbar.FlexibleSpace>
+  )
+);
+
+export default class Demo extends React.PureComponent {
+  // #FOLD_BLOCK
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: appointments,
+    };
+
+    this.commitChanges = this.commitChanges.bind(this);
+  }
+
+  // #FOLD_BLOCK
+  commitChanges({ added, changed, deleted }) {
+    this.setState((state) => {
+      let { data } = state;
+      if (added) {
+        const startingAddedId =
+          data.length > 0 ? data[data.length - 1].id + 1 : 0;
+        data = [...data, { id: startingAddedId, ...added }];
+      }
+      if (changed) {
+        data = data.map((appointment) =>
+          changed[appointment.id]
+            ? { ...appointment, ...changed[appointment.id] }
+            : appointment
+        );
+      }
+      if (deleted !== undefined) {
+        data = data.filter((appointment) => appointment.id !== deleted);
+      }
+      return { data };
+    });
+  }
+
+  render() {
+    const { data } = this.state;
+
+    return (
+      <CustomPaper>
+        <Scheduler data={data}>
+          <EditingState onCommitChanges={this.commitChanges} />
+          <ViewState defaultCurrentDate="2018-07-17" />
+
+          <MonthView
+            timeTableCellComponent={TimeTableCell}
+            dayScaleCellComponent={DayScaleCell}
+          />
+
+          <Appointments
+            appointmentComponent={Appointment}
+            appointmentContentComponent={AppointmentContent}
+          />
+          <Resources data={resources} />
+
+          <Toolbar flexibleSpaceComponent={FlexibleSpace} />
+          <DateNavigator />
+
+          <EditRecurrenceMenu />
+          <AppointmentTooltip showCloseButton showDeleteButton showOpenButton />
+          <AppointmentForm />
+          <DragDropProvider />
+        </Scheduler>
+      </CustomPaper>
+    );
+  }
+}

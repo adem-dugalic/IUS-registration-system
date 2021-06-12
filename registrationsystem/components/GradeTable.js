@@ -74,9 +74,7 @@ export default function DenseTable(props) {
   return (
     <Grid container className={classes.root}>
       <Grid item xs={12}>
-        <Typography className={classes.semester}>
-          Semester {props.semester}
-        </Typography>
+        <Typography className={classes.semester}>Semester #</Typography>
       </Grid>
       <Grid item xs={12}>
         <TableContainer>

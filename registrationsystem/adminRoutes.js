@@ -15,8 +15,8 @@ const dashboardRoutes = [
     icon: Dashboard,
   },
   {
-    path: "/admin/students",
-    name: "Students",
+    path: "/admin/users",
+    name: "Users",
     icon: Person,
   },
   {

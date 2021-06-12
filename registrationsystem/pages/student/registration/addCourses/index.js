@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import Layout from "../../../../Components/Layout";
 import CourseTable from "../../../../Components/CourseTable";
-import RegistrationMenu from "../../../../Components/RegistrationMenu";
 import { createStyles, makeStyles, withStyles } from "@material-ui/core";
+import {
+  infoColor,
+  blackColor,
+  hexToRgb,
+} from "../../../../assents/jss/material-dashboard-react";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -24,20 +28,38 @@ const useStyles = makeStyles(() =>
   })
 );
 
-const CustomTableCellEmpty = withStyles((theme) => ({
+const CustomTableRow = withStyles((theme) => ({
   head: {
-    backgroundColor: "#292626",
-    width: 20,
+    backgroundColor: infoColor[0],
+    boxShadow:
+      "0 12px 20px -10px rgba(" +
+      hexToRgb(infoColor[0]) +
+      ",.28), 0 4px 20px 0 rgba(" +
+      hexToRgb(blackColor) +
+      ",.12), 0 7px 8px -5px rgba(" +
+      hexToRgb(infoColor[0]) +
+      ",.2)",
+    "&:hover,&:focus": {
+      backgroundColor: infoColor[0],
+      boxShadow:
+        "0 12px 20px -10px rgba(" +
+        hexToRgb(infoColor[0]) +
+        ",.28), 0 4px 20px 0 rgba(" +
+        hexToRgb(blackColor) +
+        ",.12), 0 7px 8px -5px rgba(" +
+        hexToRgb(infoColor[0]) +
+        ",.2)",
+    },
   },
   // body: {
   //   fontSize: 14,
   // },
-}))(TableCell);
+}))(TableRow);
 
 const CustomTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: "#292626",
-    color: "#fff",
+    background: "transparent",
+    width: 20,
   },
   // body: {
   //   fontSize: 14,
@@ -48,21 +70,20 @@ const index = () => {
   const classes = useStyles();
   return (
     <Layout mobile={true}>
-      <RegistrationMenu />
       <div className={classes.root}>
         <Table
           aria-label="collapsible table"
           style={{ position: "sticky", top: 0, zIndex: 10 }}
         >
           <TableHead>
-            <TableRow>
-              <CustomTableCellEmpty />
-              <CustomTableCell align="left">Courses</CustomTableCell>
-              <CustomTableCell align="left" />
-              <CustomTableCell align="left" />
-              <CustomTableCell align="left" />
-              <CustomTableCell align="left" />
-            </TableRow>
+            <CustomTableRow>
+              <CustomTableCell />
+              <TableCell align="left">Courses</TableCell>
+              <TableCell align="left" />
+              <TableCell align="left" />
+              <TableCell align="left" />
+              <TableCell align="left" />
+            </CustomTableRow>
           </TableHead>
         </Table>
         <CourseTable />

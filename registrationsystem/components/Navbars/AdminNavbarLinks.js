@@ -18,9 +18,11 @@ import Search from "@material-ui/icons/Search";
 // core components
 import CustomInput from "../CustomInput/CustomInput";
 import Button from "../CustomButtons/Button.js";
+import CLink from "../CLink";
 //import useWindowSize from "../Hooks/useWindowSize";
 
 import styles from "../../assents/jss/material-dashboard-react/components/headerLinksStyle.js";
+import { useRouter } from "next/router";
 
 function useWindowSize() {
   // Initialize state with undefined width/height so server and client renders match
@@ -60,14 +62,27 @@ const useStyles = makeStyles(styles);
 export default function AdminNavbarLinks() {
   const classes = useStyles();
   const size = useWindowSize();
+  const router = useRouter();
   const [openNotification, setOpenNotification] = React.useState(null);
+  const [openMenu, setOpenMenu] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
+  // const [regMenu, setRegMenu] = useState(null);
   const handleClickNotification = (event) => {
     if (openNotification && openNotification.contains(event.target)) {
       setOpenNotification(null);
     } else {
       setOpenNotification(event.currentTarget);
     }
+  };
+  const handleClickMenu = (event) => {
+    if (openMenu && openMenu.contains(event.target)) {
+      setOpenMenu(null);
+    } else {
+      setOpenMenu(event.currentTarget);
+    }
+  };
+  const handleCloseMenu = () => {
+    setOpenMenu(null);
   };
   const handleCloseNotification = () => {
     setOpenNotification(null);
@@ -82,6 +97,248 @@ export default function AdminNavbarLinks() {
   const handleCloseProfile = () => {
     setOpenProfile(null);
   };
+  // function activeRoute() {
+  //   if (router.pathname === "/student/registration") {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  //   console.log(router.pathname);
+  // }
+
+  function switchRender() {
+    if (router.pathname === "/student/registration") {
+      return (
+        <div className={classes.manager}>
+          <Button
+            color={size.width > 959 ? "transparent" : "white"}
+            justIcon={size.width > 959}
+            simple={!(size.width > 959)}
+            aria-owns={openMenu ? "menu-list-grow" : null}
+            aria-haspopup="true"
+            onClick={handleClickMenu}
+            className={classes.buttonLink}
+          >
+            <Dashboard className={classes.icons} />
+            {/* <span className={classes.notifications}>5</span> */}
+            <Hidden mdUp implementation="css">
+              <p onClick={handleCloseMenu} className={classes.linkText}>
+                Registration
+              </p>
+            </Hidden>
+          </Button>
+          <Poppers
+            open={Boolean(openMenu)}
+            anchorEl={openMenu}
+            transition
+            disablePortal
+            className={
+              classNames({ [classes.popperClose]: !openMenu }) +
+              " " +
+              classes.popperNav
+            }
+          >
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                id="notification-menu-list-grow"
+                style={{
+                  transformOrigin:
+                    placement === "bottom" ? "center top" : "center bottom",
+                }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={handleCloseMenu}>
+                    <MenuList role="menu">
+                      <MenuItem
+                        onClick={handleCloseMenu}
+                        className={classes.dropdownItem}
+                      >
+                        <CLink path="/student/registration">
+                          Choosen courses
+                        </CLink>
+                      </MenuItem>
+                      <MenuItem
+                        onClick={handleCloseMenu}
+                        className={classes.dropdownItem}
+                      >
+                        <CLink path="/student/registration/addCourses">
+                          Add Courses
+                        </CLink>
+                      </MenuItem>
+                      <MenuItem
+                        onClick={handleCloseMenu}
+                        className={classes.dropdownItem}
+                      >
+                        <CLink path="/student/schedule">Schedule</CLink>
+                      </MenuItem>
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Poppers>
+        </div>
+      );
+    } else if (router.pathname === "/admin/users") {
+      return (
+        <div className={classes.manager}>
+          <Button
+            color={size.width > 959 ? "transparent" : "white"}
+            justIcon={size.width > 959}
+            simple={!(size.width > 959)}
+            aria-owns={openMenu ? "menu-list-grow" : null}
+            aria-haspopup="true"
+            onClick={handleClickMenu}
+            className={classes.buttonLink}
+          >
+            <Dashboard className={classes.icons} />
+            {/* <span className={classes.notifications}>5</span> */}
+            <Hidden mdUp implementation="css">
+              <p onClick={handleCloseMenu} className={classes.linkText}>
+                Users
+              </p>
+            </Hidden>
+          </Button>
+          <Poppers
+            open={Boolean(openMenu)}
+            anchorEl={openMenu}
+            transition
+            disablePortal
+            className={
+              classNames({ [classes.popperClose]: !openMenu }) +
+              " " +
+              classes.popperNav
+            }
+          >
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                id="notification-menu-list-grow"
+                style={{
+                  transformOrigin:
+                    placement === "bottom" ? "center top" : "center bottom",
+                }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={handleCloseMenu}>
+                    <MenuList role="menu">
+                      <MenuItem
+                        onClick={handleCloseMenu}
+                        className={classes.dropdownItem}
+                      >
+                        <CLink path="/admin/addUser">Add Users</CLink>
+                      </MenuItem>
+                      {/* <MenuItem
+                    onClick={handleCloseMenu}
+                    className={classes.dropdownItem}
+                  >
+                    <CLink path="/student/registration/addCourses">
+                      Add Courses
+                    </CLink>
+                  </MenuItem> */}
+                      {/* <MenuItem
+                    onClick={handleCloseMenu}
+                    className={classes.dropdownItem}
+                  >
+                    <CLink path="/student/schedule">Schedule</CLink>
+                  </MenuItem> */}
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Poppers>
+        </div>
+      );
+    } else if (router.pathname === "/admin/courses") {
+      return (
+        <div className={classes.manager}>
+          <Button
+            color={size.width > 959 ? "transparent" : "white"}
+            justIcon={size.width > 959}
+            simple={!(size.width > 959)}
+            aria-owns={openMenu ? "menu-list-grow" : null}
+            aria-haspopup="true"
+            onClick={handleClickMenu}
+            className={classes.buttonLink}
+          >
+            <Dashboard className={classes.icons} />
+            {/* <span className={classes.notifications}>5</span> */}
+            <Hidden mdUp implementation="css">
+              <p onClick={handleCloseMenu} className={classes.linkText}>
+                Courses
+              </p>
+            </Hidden>
+          </Button>
+          <Poppers
+            open={Boolean(openMenu)}
+            anchorEl={openMenu}
+            transition
+            disablePortal
+            className={
+              classNames({ [classes.popperClose]: !openMenu }) +
+              " " +
+              classes.popperNav
+            }
+          >
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                id="notification-menu-list-grow"
+                style={{
+                  transformOrigin:
+                    placement === "bottom" ? "center top" : "center bottom",
+                }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={handleCloseMenu}>
+                    <MenuList role="menu">
+                      <MenuItem
+                        onClick={handleCloseMenu}
+                        className={classes.dropdownItem}
+                      >
+                        <CLink path="/admin/addCourse">Add a course</CLink>
+                      </MenuItem>
+                      {/* <MenuItem
+                onClick={handleCloseMenu}
+                className={classes.dropdownItem}
+              >
+                <CLink path="/student/registration/addCourses">
+                  Add Courses
+                </CLink>
+              </MenuItem> */}
+                      {/* <MenuItem
+                onClick={handleCloseMenu}
+                className={classes.dropdownItem}
+              >
+                <CLink path="/student/schedule">Schedule</CLink>
+              </MenuItem> */}
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Poppers>
+        </div>
+      );
+    } else {
+      return (
+        <Button
+          color={size.width > 959 ? "transparent" : "white"}
+          justIcon={size.width > 959}
+          simple={!(size.width > 959)}
+          aria-label="Dashboard"
+          className={classes.buttonLink}
+        >
+          <Dashboard className={classes.icons} />
+          <Hidden mdUp implementation="css">
+            <p className={classes.linkText}>Dashboard</p>
+          </Hidden>
+        </Button>
+      );
+    }
+  }
   // React.useEffect(() => {
   //   setWinDim(window.innerWidth);
   //   console.log(winDim);
@@ -104,18 +361,8 @@ export default function AdminNavbarLinks() {
           <Search />
         </Button>
       </div>
-      <Button
-        color={size.width > 959 ? "transparent" : "white"}
-        justIcon={size.width > 959}
-        simple={!(size.width > 959)}
-        aria-label="Dashboard"
-        className={classes.buttonLink}
-      >
-        <Dashboard className={classes.icons} />
-        <Hidden mdUp implementation="css">
-          <p className={classes.linkText}>Dashboard</p>
-        </Hidden>
-      </Button>
+      {switchRender()}
+      {/*  */}
       <div className={classes.manager}>
         <Button
           color={size.width > 959 ? "transparent" : "white"}

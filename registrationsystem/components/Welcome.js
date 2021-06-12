@@ -17,15 +17,15 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-export default function Welcome() {
+export default function Welcome(props) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <Typography variant="h3" className={classes.typ}>
-        IUS System registration
+        IUS Registration system
       </Typography>
       <Typography variant="h4" className={classes.typ}>
-        Student panel
+        {props.panel} panel
       </Typography>
     </div>
   );

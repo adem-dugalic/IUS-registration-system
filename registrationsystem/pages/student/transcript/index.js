@@ -79,9 +79,9 @@ const index = () => {
 
               <Typography>Student No : 170302071 </Typography>
 
-              <Typography> Name : Adem </Typography>
+              <Typography> Name : Dzonvick </Typography>
 
-              <Typography> Surname : Dugalić</Typography>
+              <Typography> Surname : Šejla</Typography>
 
               <Typography>Registration Date : 9/18/2017 </Typography>
             </Grid>

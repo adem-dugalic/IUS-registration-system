@@ -55,11 +55,11 @@ const dashboardRoutes = [
   //   component: RTLPage,
   //   layout: "/rtl",
   // },
-  {
-    path: "/LogOut",
-    name: "LogOut",
-    icon: Unarchive,
-  },
+  // {
+  //   path: "/LogOut",
+  //   name: "LogOut",
+  //   icon: Unarchive,
+  // },
 ];
 
 export default dashboardRoutes;

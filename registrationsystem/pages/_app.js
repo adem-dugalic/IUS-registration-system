@@ -4,9 +4,12 @@ import Head from "next/head";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../styles/theme";
+import { CookiesProvider } from "react-cookie";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
+  const queryClient = new QueryClient();
 
   React.useEffect(() => {
     // Remove the server-side injected CSS.
@@ -25,10 +28,15 @@ export default function MyApp(props) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         /> */}
       </Head>
+
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         {/* <CssBaseline /> */}
-        <Component {...pageProps} />
+        <CookiesProvider>
+          <QueryClientProvider client={queryClient}>
+            <Component {...pageProps} />
+          </QueryClientProvider>
+        </CookiesProvider>
       </ThemeProvider>
     </React.Fragment>
   );
