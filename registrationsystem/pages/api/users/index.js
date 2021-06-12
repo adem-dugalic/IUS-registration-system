@@ -1,6 +1,12 @@
 import dbConnect from "../../../utilities/dbConnect";
 import User from "../../../models/User";
 
+export const config = {
+  api: {
+    externalResolver: true,
+  },
+};
+
 dbConnect();
 
 export default async (req, res) => {
@@ -11,7 +17,7 @@ export default async (req, res) => {
       try {
         const users = await User.find({});
 
-        res.status(200).json({ success: true, data: users });
+        res.status(200).end(JSON.stringify({ success: true, data: users }));
       } catch (error) {
         res.status(400).json({ success: false });
       }
@@ -35,9 +41,11 @@ export default async (req, res) => {
         user
           .save()
           .then(() => {
-            res.status(201).json({
-              message: "User added successfully!",
-            });
+            res.status(201).end(
+              JSON.stringify({
+                message: "User added successfully!",
+              })
+            );
           })
           .catch((error) => {
             res.status(500).json({

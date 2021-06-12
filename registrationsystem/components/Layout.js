@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbars/Navbar.js";
-import {
-  makeStyles,
-  useTheme,
-  Theme,
-  createStyles,
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import studentRoutes from "../studentRoutes";
 import adminRoutes from "../adminRoutes";
 import professorRoutes from "../professorRoutes";
@@ -16,92 +11,66 @@ import Cookies from "universal-cookie";
 import { useRouter } from "next/router";
 import { CircularProgress, Typography } from "@material-ui/core";
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    root: {
-      height: "100%",
-      position: "relative",
-      backgroundImage: "url(/banner1.jpg)",
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-    },
-    pannelDiv: {
-      position: "relative",
-      display: "flex",
-      // top: "10%",
-      // left: "10%",
-      width: "100%",
-      height: "100%",
-      display: "flex",
-      backgroundColor: "rgb(255, 255, 255, 0.8)",
-      // paddingLeft: 10,
-    },
-    main: {
-      position: "relaive",
-      width: "100%",
-      //overflowY: "auto",
-    },
-    barDiv: {
-      position: "sticky",
-      width: "100%",
-    },
-    workArea: {
-      position: "relaive",
-      width: "100%",
-      height: "100%",
-      // overflowY: "clip",
-    },
-  })
-);
-
-// function getWindowDimensions() {
-//   if (typeof window !== "undefined") {
-//     const { innerWidth: width, innerHeight: height } = window;
-//     if (width < 800) {
-//       return true;
-//     } else return false;
-//   }
-// }
+const useStyles = makeStyles(() => ({
+  root: {
+    height: "100%",
+    position: "relative",
+    backgroundImage: "url(/banner1.jpg)",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  },
+  pannelDiv: {
+    position: "relative",
+    display: "flex",
+    // top: "10%",
+    // left: "10%",
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    backgroundColor: "rgb(255, 255, 255, 0.8)",
+    // paddingLeft: 10,
+  },
+  main: {
+    position: "relaive",
+    width: "100%",
+    //overflowY: "auto",
+  },
+  barDiv: {
+    position: "sticky",
+    width: "100%",
+  },
+  workArea: {
+    position: "relaive",
+    width: "100%",
+    height: "100%",
+    // overflowY: "clip",
+  },
+}));
 
 const Layout = (props) => {
   const classes = useStyles();
-  const [user, setUser] = useState("admin"); //smt like Cokie.user??
-  const mainPanel = React.createRef();
   let location = useRouter();
   const [color, setColor] = React.useState("blue");
   const [curPage, setCurPage] = React.useState("Home");
-  const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const cookies = new Cookies();
-  const {
-    data: mrUser,
-    status,
-    refetch,
-  } = useCurrentUser(cookies.get("userId"));
-  if (status !== "success" && mrUser) {
-    return (
-      <CircularProgress
-        style={{ position: "relative", left: "50%", top: "50%" }}
-      />
-    );
-  } else if (status === "error") {
-    <Typography variant="h1">ERROR WITH DATA FETCHING</Typography>;
-  }
+  const { data: mrUser, status } = useCurrentUser(cookies.get("userId"));
+  React.useEffect(() => {
+    if (status !== "success" && mrUser) {
+      return (
+        <CircularProgress
+          style={{ position: "relative", left: "50%", top: "50%" }}
+        />
+      );
+    }
+  }, [mrUser]);
   if (cookies.get("token") === undefined) {
     typeof window !== "undefined" && location.push("/");
   }
 
-  // const { data: users, status, refetch } = useUsers();
-  // console.log(users);
-  //const [isMobile, setisMobile] = useState(props.mobile);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
-  };
-  const resizeFunction = () => {
-    if (window.innerWidth >= 960) {
-      setMobileOpen(false);
-    }
   };
   function whichuser() {
     if (location.pathname.includes("/student/")) {
@@ -112,21 +81,9 @@ const Layout = (props) => {
       return adminRoutes;
     }
   }
-  // React.useEffect(() => {
-  //   window.addEventListener("resize", resizeFunction);
-  //   // Specify how to clean up after this effect:
-  //   return function cleanup() {
-  //     window.removeEventListener("resize", resizeFunction);
-  //   };
-  // }, [mainPanel]);
   return (
     <div className={classes.root}>
       <div className={classes.pannelDiv}>
-        {/* <Drawer
-          mobileOpenFunction={props.setMobileOpen}
-          mobileOpen={props.mobileOpen}
-          user={"admin"}
-        /> */}
         <Sidebar
           routes={whichuser()}
           handleDrawerToggle={handleDrawerToggle}
@@ -134,25 +91,13 @@ const Layout = (props) => {
           open={mobileOpen}
           color={color}
           user={mrUser}
-          // {...rest}
         />
         <main className={classes.main}>
           <Navbar
             routes={whichuser()}
             curPage={curPage}
             handleDrawerToggle={handleDrawerToggle}
-            // {...rest}
           />
-          {/* <div className={classes.bardDiv}> */}
-          {/* {isMobile ? (
-              <Bar
-                setMobileOpen={props.setMobileOpen}
-                mobileOpen={props.mobileOpen}
-              />
-            ) : (
-              ""
-            )} */}
-          {/* </div> */}
           <div className={classes.workArea}>{props.children}</div>
         </main>
       </div>

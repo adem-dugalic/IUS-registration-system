@@ -66,10 +66,6 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const PDFViewer = dynamic(() => import("../../../components/ContractPDF"), {
-  ssr: false,
-});
-
 const Home = (props) => {
   const classes = useStyles();
   return (

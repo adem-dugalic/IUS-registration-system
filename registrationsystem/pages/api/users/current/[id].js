@@ -1,6 +1,12 @@
 import dbConnect from "../../../../utilities/dbConnect";
 import User from "../../../../models/User";
 
+export const config = {
+  api: {
+    externalResolver: true,
+  },
+};
+
 dbConnect();
 
 export default async (req, res) => {
@@ -18,7 +24,7 @@ export default async (req, res) => {
           res.status(400).json({ success: false });
         }
 
-        res.status(200).json({ success: true, data: user });
+        res.status(200).end(JSON.stringify({ success: true, data: user }));
       } catch (error) {
         res.status(400).json({ success: false });
       }

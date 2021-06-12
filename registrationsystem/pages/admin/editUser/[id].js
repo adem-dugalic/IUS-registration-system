@@ -7,7 +7,7 @@ const EditUsers = (props) => {
   const [user, serUser] = useState("admin");
   return (
     <Layout mobile={false} user={user}>
-      <div tyle={{ paddingLeft: "1%", paddingRight: "1%" }}>
+      <div tyle={{ paddingLeft: "2%", paddingRight: "2%" }}>
         <EditUser />
       </div>
     </Layout>

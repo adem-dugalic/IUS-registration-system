@@ -25,7 +25,7 @@ import { Button } from "@material-ui/core";
 import { useQuery } from "react-query";
 import { httpClient } from "../utilities/httpClient.js";
 
-const useStyles = makeStyles(styles);
+const useStyle = makeStyles(styles);
 const theme = createMuiTheme({
   overrides: {
     MuiDrawer: {
@@ -38,12 +38,9 @@ const theme = createMuiTheme({
 });
 
 export default function Sidebar(props) {
-  const classes = useStyles();
-  let location = useRouter();
+  const classes = useStyle();
+  const location = useRouter();
   const user = props.user;
-  // if (!user) {
-  //   return null;
-  // }
   const cookies = new Cookies();
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {

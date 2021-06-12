@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev && NODE_OPTIONS=--max-old-space-size=8129",
     "build": "next build",
-    "start": "next start"
+    "start": "next start && NODE_OPTIONS=--max-old-space-size=8129"
   },
   "dependencies": {
     "@devexpress/dx-react-core": "^2.7.5",
@@ -30,7 +30,6 @@
     "react-cookie": "^4.0.3",
     "react-dom": "17.0.2",
     "react-hook-form": "^6.15.5",
-    "react-pdf": "^5.3.0",
     "react-query": "^3.13.0"
   }
 }

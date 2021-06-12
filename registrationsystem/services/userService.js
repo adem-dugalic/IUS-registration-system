@@ -37,24 +37,6 @@ export function useCurrentUser(userID) {
   );
 }
 
-export function useGetUserCourses(userID) {
-  return useQuery(
-    "userCourses",
-    async () => {
-      const { data } = await httpClient.get(`/userCourse/${userID}`);
-      return data;
-    },
-    {
-      onSuccess() {
-        console.log("succesfully got user courses");
-      },
-      //We can use this option to refetch for any number og miliseconds
-      //But keep in mind that it will refetch non stop in that set interval
-      //refetchInterval: 1000,
-    }
-  );
-}
-
 export function useGetUser(userID) {
   //Unable to use infinite query for some reason than it does not pass the interface corrcetly and it can not be read
   return useQuery(

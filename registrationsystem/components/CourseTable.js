@@ -16,6 +16,7 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { Checkbox } from "@material-ui/core";
 import { useCourses } from "../services/courseService";
+import Cookies from "universal-cookie";
 import {
   infoColor,
   blackColor,
@@ -73,9 +74,13 @@ function Row(props) {
   const [open, setOpen] = React.useState(false);
   console.log(props.courses);
   const classes = useRowStyles();
-  const mutation = useMutation((id) => httpClient.post(`/userCourse/${id}`), {
-    onSuccess: () => {},
-  });
+  const cookies = new Cookies();
+  const mutation = useMutation(
+    (pay) => httpClient.post(`/userCourse/${cookies.get("userId")}`, pay),
+    {
+      onSuccess: () => {},
+    }
+  );
 
   return (
     <React.Fragment>
@@ -151,7 +156,7 @@ function Row(props) {
                             <TableCell align="right">
                               <IconButton
                                 onClick={() => {
-                                  mutation.mutate(historyRow._id);
+                                  mutation.mutate({ courseId: historyRow._id });
                                 }}
                               >
                                 <AddCircle />

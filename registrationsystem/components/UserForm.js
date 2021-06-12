@@ -11,9 +11,6 @@ import {
   InputLabel,
   makeStyles,
   MenuItem,
-  Paper,
-  Radio,
-  RadioGroup,
   Select,
   TextField,
   Typography,
@@ -23,9 +20,9 @@ import CardBody from "./Card/CardBody";
 import CardHeader from "./Card/CardHeader";
 import Card from "./Card/Card.js";
 import { useForm } from "react-hook-form";
-import { useCreateUser } from "../services/userService";
 import { useMutation } from "react-query";
 import { httpClient } from "../utilities/httpClient";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -45,6 +42,7 @@ function UserPanel(props) {
   const classes = useStyles();
   const [faculty, setFaculty] = useState("");
   const [program, setProgram] = useState("");
+  const router = useRouter();
   const { register, handleSubmit } = useForm();
   // const [mutate, { data, error }] = useCreateUser();
   const mutation = useMutation((userData) =>
@@ -104,6 +102,7 @@ function UserPanel(props) {
     console.log(someone);
     // await mutate(someone);
     mutation.mutate(someone);
+    router.push("/admin/users/");
   };
 
   return (

@@ -29,8 +29,9 @@ import {
   hexToRgb,
 } from "../assents/jss/material-dashboard-react";
 import { Add, Edit } from "@material-ui/icons";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { httpClient } from "../utilities/httpClient";
+import { useGetUserCourses } from "../services/courseService";
 
 const CustomTableHeadRow = withStyles((theme) => ({
   head: {
@@ -85,8 +86,38 @@ function Row(props) {
   const cookies = new Cookies();
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
-  const mutation = useMutation((userData) =>
-    httpClient.put(`/users/${row._id}`, userData)
+  // const {
+  //   data: userCourse,
+  //   status,
+  //   refetch,
+  // } = useGetUserCourses(cookies.get("userId"));
+  // const {
+  //   data: userCourses,
+  //   status,
+  //   refetch,
+  // } = useQuery(
+  //   "userCoursesApp",
+  //   async () => {
+  //     const { data } = await httpClient.get(`/userCourse/${row._id}`);
+  //     return data;
+  //   },
+  //   {
+  //     onSuccess(data) {
+  //       console.log("succesfully got courses");
+  //       console.log(data);
+  //     },
+  //   }
+  // );
+
+  const { data: userCourse, status, refetch } = useGetUserCourses(row._id);
+
+  const mutation = useMutation(
+    (userData) => httpClient.put(`/users/${row._id}`, userData),
+    {
+      onSuccess: () => {
+        props.refetch();
+      },
+    }
   );
 
   function edit() {
@@ -141,7 +172,7 @@ function Row(props) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
               <Typography variant="h6" gutterBottom component="div">
-                History
+                Courses
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
@@ -153,18 +184,21 @@ function Row(props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {/* {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.date}
-                      </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
-                      </TableCell>
-                    </TableRow>
-                  ))} */}
+                  {userCourse &&
+                    userCourse.data.map((historyRow) => (
+                      <TableRow key={historyRow.course_id}>
+                        <TableCell component="th" scope="row">
+                          {historyRow.course_id}
+                        </TableCell>
+                        <TableCell>{historyRow.course_name}</TableCell>
+                        <TableCell align="right">
+                          {historyRow.Lecturer}
+                        </TableCell>
+                        <TableCell align="right">
+                          {historyRow.prerequisite}
+                        </TableCell>
+                      </TableRow>
+                    ))}
                 </TableBody>
               </Table>
             </Box>
@@ -253,7 +287,9 @@ export default function ApprovalTable() {
               clicked &&
               row.isApproved &&
               row.isAdmin === false &&
-              row.isSAO === false && <Row key={row.userID} row={row} />
+              row.isSAO === false && (
+                <Row key={row.userID} row={row} refetch={refetch} />
+              )
           )}
           {mrUser.data.map(
             (row) =>
@@ -261,7 +297,12 @@ export default function ApprovalTable() {
               !row.isApproved &&
               row.isAdmin === false &&
               row.isSAO === false && (
-                <Row key={row.userID} row={row} approved={true} />
+                <Row
+                  key={row.userID}
+                  row={row}
+                  approved={true}
+                  refetch={refetch}
+                />
               )
           )}
         </TableBody>

@@ -37,6 +37,25 @@ export function useGetCourse(userID) {
     }
   );
 }
+
+export function useGetUserCourses(userID) {
+  return useQuery(
+    "userCoursesGet",
+    async () => {
+      const { data } = await httpClient.get(`/userCourse/${userID}`);
+      return data;
+    },
+    {
+      onSuccess() {
+        console.log("succesfully got user courses");
+      },
+      //We can use this option to refetch for any number og miliseconds
+      //But keep in mind that it will refetch non stop in that set interval
+      //refetchInterval: 1000,
+    }
+  );
+}
+
 //New course
 export function useCreateCourse() {
   return useMutation(async (data) => {

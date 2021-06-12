@@ -1,12 +1,8 @@
 import {
   Button,
-  Checkbox,
   createStyles,
   CssBaseline,
   FormControl,
-  FormControlLabel,
-  FormGroup,
-  FormLabel,
   Grid,
   InputLabel,
   makeStyles,
@@ -20,8 +16,8 @@ import CardBody from "./Card/CardBody";
 import CardHeader from "./Card/CardHeader";
 import Card from "./Card/Card.js";
 import { useForm } from "react-hook-form";
-import { useCreateUser } from "../services/userService";
 import { useMutation } from "react-query";
+import { useRouter } from "next/router";
 import { httpClient } from "../utilities/httpClient";
 
 const useStyles = makeStyles(() =>
@@ -43,6 +39,7 @@ function UserPanel(props) {
   const [faculty, setFaculty] = useState("");
   const [program, setProgram] = useState("");
   const { register, handleSubmit } = useForm();
+  const router = useRouter();
   // const [mutate, { data, error }] = useCreateUser();
   const mutation = useMutation((courseData) =>
     httpClient.post("/courses", courseData)
@@ -68,6 +65,7 @@ function UserPanel(props) {
     console.log(someCourse);
     // await mutate(someone);
     mutation.mutate(someCourse);
+    router.push("/admin/courses/");
   };
 
   return (
