@@ -110,7 +110,10 @@ function Row(props) {
   // );
 
   const { data: userCourse, status, refetch } = useGetUserCourses(row._id);
-
+  // if(userCourse === undefined){
+  //   return null;
+  // }
+  console.log(userCourse);
   const mutation = useMutation(
     (userData) => httpClient.put(`/users/${row._id}`, userData),
     {
@@ -179,13 +182,14 @@ function Row(props) {
                   <TableRow>
                     <TableCell>Course ID</TableCell>
                     <TableCell>Course Name</TableCell>
-                    <TableCell align="right">Pre-Requisites</TableCell>
+                    <TableCell align="right">Lecturer</TableCell>
+                    <TableCell align="right">Prerequisite</TableCell>
                     <TableCell align="right">ECTS</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {userCourse &&
-                    userCourse.data.map((historyRow) => (
+                    userCourse[0].information.map((historyRow) => (
                       <TableRow key={historyRow.course_id}>
                         <TableCell component="th" scope="row">
                           {historyRow.course_id}
@@ -283,7 +287,7 @@ export default function ApprovalTable() {
         </TableHead>
         <TableBody>
           {mrUser.data.map(
-            (row) =>
+            (row, index) =>
               clicked &&
               row.isApproved &&
               row.isAdmin === false &&
@@ -292,7 +296,7 @@ export default function ApprovalTable() {
               )
           )}
           {mrUser.data.map(
-            (row) =>
+            (row, index) =>
               !clicked &&
               !row.isApproved &&
               row.isAdmin === false &&

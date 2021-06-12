@@ -18,8 +18,10 @@ export default async (req, res) => {
   switch (method) {
     case "POST":
       try {
-        const userId = req.cookies["userId"] || req.query.userId;
+        const userId = id;
         const courseId = req.body.courseId;
+        console.log(userId);
+        console.log(courseId);
         if (!courseId) {
           res.json("Error course not define in queries.");
         }
@@ -38,7 +40,7 @@ export default async (req, res) => {
       break;
     case "GET":
       try {
-        const userId = req.cookies["userId"] || req.query.userId;
+        const userId = id;
         UserCourse.aggregate([
           {
             $match: { userId: userId },
@@ -102,7 +104,7 @@ export default async (req, res) => {
       break;
     case "DELETE":
       try {
-        const userId = req.cookies["userId"] || req.query.userId;
+        const userId = id;
         const courseId = req.query.courseId;
         if (!courseId) {
           res.json("Error course not define in queries.");

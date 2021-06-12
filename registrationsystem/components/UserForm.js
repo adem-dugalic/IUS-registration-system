@@ -214,7 +214,7 @@ function UserPanel(props) {
                     }
                   />
                   <FormControlLabel
-                    label="SAO"
+                    label="Professor"
                     control={
                       <Checkbox
                         name="sao"

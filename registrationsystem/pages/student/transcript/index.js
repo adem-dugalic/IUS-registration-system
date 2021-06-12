@@ -77,13 +77,13 @@ const index = () => {
             <Grid item lg={6} className={classes.gridItems}>
               <Typography>JMBG : 2606998190013 </Typography>
 
-              <Typography>Student No : 170302071 </Typography>
+              <Typography>Student No : 170302001 </Typography>
 
-              <Typography> Name : Dzonvick </Typography>
+              <Typography> Name : Student </Typography>
 
-              <Typography> Surname : Šejla</Typography>
+              <Typography> Surname : Student</Typography>
 
-              <Typography>Registration Date : 9/18/2017 </Typography>
+              <Typography>Registration Date : 6/12/2021 </Typography>
             </Grid>
             <Grid item lg={6} className={classes.gridItems}>
               <Typography>
