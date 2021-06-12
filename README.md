@@ -2,7 +2,7 @@
  Full registration system for International University of Sarajevo built using Next.js
 
 
-#Preffered manager yarn
+# Preffered manager yarn
 
 To start first run 
 
