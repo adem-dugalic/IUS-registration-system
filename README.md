@@ -9,3 +9,7 @@ to install all the packages.
 
 After the installation 
     run "yarn dev" or "npm dev"
+
+## Made by 
+- Adem Dugalić
+- Tarik Muharem
