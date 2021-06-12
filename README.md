@@ -3,7 +3,15 @@
 
 
 To start first run 
-"yarn" or "npm install", 
+
+```
+yarn
+```
+or
+
+```
+npm install
+```
 to install all the packages.
 
 
