@@ -3,9 +3,9 @@
 
 
 To start first run 
-yarn or npm install, 
+"yarn" or "npm install", 
 to install all the packages.
 
 
 After the installation 
-    run yarn dev or npm dev
+    run "yarn dev" or "npm dev"
